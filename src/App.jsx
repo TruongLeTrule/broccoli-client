@@ -1,5 +1,13 @@
-import React from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+/* eslint-disable no-unused-vars */
+import React from "react";
+import {
+  createBrowserRouter,
+  Route,
+  RouterProvider,
+  Routes,
+} from "react-router-dom";
+import Nav from "./components/Nav";
+import Footer from "./components/Footer";
 
 import {
   HomeLayout,
@@ -9,11 +17,11 @@ import {
   Register,
   Meal,
   Planner,
-} from './pages';
+} from "./pages";
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <HomeLayout />,
     errorElement: <Error />,
     children: [
@@ -22,19 +30,19 @@ const router = createBrowserRouter([
         element: <Landing />,
       },
       {
-        path: 'login',
+        path: "login",
         element: <Login />,
       },
       {
-        path: 'register',
+        path: "register",
         element: <Register />,
       },
       {
-        path: 'meal',
+        path: "meal",
         element: <Meal />,
       },
       {
-        path: 'planner',
+        path: "planner",
         element: <Planner />,
       },
     ],
@@ -42,6 +50,12 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <Nav />
+      <RouterProvider router={router} />
+      <Footer />
+    </>
+  );
 };
 export default App;
