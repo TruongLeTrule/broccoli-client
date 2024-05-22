@@ -6,18 +6,10 @@ import {
   RouterProvider,
   Routes,
 } from "react-router-dom";
-import Nav from "./components/Nav";
-import Footer from "./components/Footer";
 
-import {
-  HomeLayout,
-  Error,
-  Landing,
-  Login,
-  Register,
-  Meal,
-  Planner,
-} from "./pages";
+import HomeLayout from "./layouts/HomeLayout";
+
+import { Error, Landing, Login, Register, Meal, Planner } from "./pages";
 
 const router = createBrowserRouter([
   {
@@ -50,12 +42,6 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
-  return (
-    <>
-      <Nav />
-      <RouterProvider router={router} />
-      <Footer />
-    </>
-  );
+  return <RouterProvider router={router} />;
 };
 export default App;

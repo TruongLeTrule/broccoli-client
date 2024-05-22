@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import React from "react";
 import { HiOutlineMenu } from "react-icons/hi";
 import { FaXmark } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -31,7 +32,7 @@ const Nav = () => {
   const navItems = [
     {
       name: "Trang chủ",
-      path: "/landing",
+      path: "/",
     },
     {
       name: "Món ăn",
@@ -65,7 +66,7 @@ const Nav = () => {
           <ul className="md:flex space-x-12 hidden px-20 py-5">
             {navItems.map(({ name, path }) => (
               <li key={name} className="hover:text-primaryColor">
-                <a href={path}>{name}</a>
+                <Link to={path}>{name}</Link>
               </li>
             ))}
           </ul>
