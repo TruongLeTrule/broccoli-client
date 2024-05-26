@@ -8,3 +8,6 @@ export { default as Register } from './Register';
 export { default as Meal } from './Meal';
 // Planner pages
 export { default as Planner } from './Planner';
+// Populate pages
+export { default as PopulateMeal } from './PopulateMeal';
+export { default as PopulateIngredient } from './PopulateIngredient';
