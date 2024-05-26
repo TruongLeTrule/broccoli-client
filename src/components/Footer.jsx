@@ -36,7 +36,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="w-full mt-40 bg-secondaryColor py-2 px-2 rounded-t-3xl shadow-md bottom-0">
+    <footer className="w-full mt-40 bg-secondaryColor py-2 px-2 rounded-t-3xl shadow-md bottom-0 max-md:mt-20">
       <div className="max-w-[1240px] mx-auto flex flex-row gap-10 py-4">
         <p className="font-dancing font-semibold text-6xl text-bgColor">
           Broccoli
