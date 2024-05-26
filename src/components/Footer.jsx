@@ -36,7 +36,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="w-full mt-24 bg-secondaryColor py-2 px-2 rounded-t-3xl shadow-md bottom-0">
+    <footer className="w-full mt-40 bg-secondaryColor py-2 px-2 rounded-t-3xl shadow-md bottom-0">
       <div className="max-w-[1240px] mx-auto flex flex-row gap-10 py-4">
         <p className="font-dancing font-semibold text-6xl text-bgColor">
           Broccoli
@@ -47,9 +47,9 @@ const Footer = () => {
         <img
           src="src\assets\logo.png"
           alt=""
-          className="absolute size-[20rem] left-5 "
+          className="absolute size-[20rem] left-5 max-xl:hidden"
         />
-        <div className="max-w-[1000px] ml-auto grid grid-cols-3 rounded-sm py-2">
+        <div className="max-w-[1000px] ml-auto grid lg:grid-cols-3 rounded-sm py-2">
           {footerItems.map((item, index) => (
             <div key={index} className="w-fit ">
               <p className="text-2xl font-semibold py-2 ">{item.title}</p>

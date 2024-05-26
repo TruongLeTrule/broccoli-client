@@ -3,7 +3,7 @@ import Circle from "./circle";
 
 const StepTwoSection = () => {
   return (
-    <div className="mt-12">
+    <div className="mt-20">
       <Circle />
       <div className="pl-4 lg:pl-14 max-w-screen-2xl ml-auto min-h-screen h-screen flex flex-row">
         <div className="hidden lg:flex flex-row h-full w-full items-center justify-center">

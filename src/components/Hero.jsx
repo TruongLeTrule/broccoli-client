@@ -1,7 +1,7 @@
 ﻿import React from "react";
 import Circle from "./circle";
 
-const IntroSection = () => {
+const Hero = () => {
   return (
     <div className="mt-20">
       <Circle />
@@ -40,4 +40,4 @@ const IntroSection = () => {
   );
 };
 
-export default IntroSection;
+export default Hero;

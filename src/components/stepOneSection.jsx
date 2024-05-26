@@ -1,11 +1,12 @@
 ﻿import React from "react";
-import Circle from "./circle";
+import Circle2 from "./circle2";
 
 const StepOneSection = () => {
   return (
-    <div className="mt-12">
+    <div className="mt-20 ">
+      <Circle2 />
       <div className="flex flex-row">
-        <div className="w-full flex flex-col justify-center px-20 gap-5">
+        <div className="flex flex-col justify-center px-10 gap-5 w-[1000px]">
           <div className="">
             <p className="font-dancing font-semibold text-8xl text-primaryColor ml-10">
               Bước 1:
@@ -22,7 +23,7 @@ const StepOneSection = () => {
         </div>
         <div className="hidden lg:flex flex-row h-full items-center justify-center mr-28">
           <div className="z-10">
-            <img src="src\assets\com.png" alt="" />
+            <img src="src\assets\com.png" alt="" className="w-[800px]" />
           </div>
         </div>
       </div>

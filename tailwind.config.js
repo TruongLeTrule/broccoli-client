@@ -13,6 +13,7 @@ export default {
       secondaryColor: "#C1F2B0",
       highlightColor: "#D0011B",
       thirdColor: "#007336",
+      fourthColor: "#E6FFDD",
       btnColor: "#FFB534",
     },
   },

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import React from "react";
 import { HiOutlineMenu } from "react-icons/hi";
 import { FaXmark } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -63,10 +63,19 @@ const Nav = () => {
           >
             Broccoli
           </a>
-          <ul className="md:flex space-x-12 hidden px-20 py-5">
+          <ul className="md:flex space-x-12 hidden px-20">
             {navItems.map(({ name, path }) => (
-              <li key={name} className="hover:text-primaryColor">
-                <Link to={path}>{name}</Link>
+              <li key={name} className="">
+                <NavLink
+                  to={path}
+                  className={({ isActive }) => {
+                    return !isActive
+                      ? "border-none py-2 px-2 text-textColor hover:text-primaryColor "
+                      : "border-b-4 py-2 px-2 text-primaryColor";
+                  }}
+                >
+                  {name}
+                </NavLink>
               </li>
             ))}
           </ul>

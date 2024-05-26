@@ -11,7 +11,7 @@ const Register = () => {
   };
 
   return (
-    <div className="mt-20">
+    <div className="mt-28">
       <Circle />
       <div className="px-4 lg:px-14 max-w-screen-2xl mx-auto min-h-screen h-screen flex flex-row">
         <div className="hidden lg:flex flex-row h-full w-full items-center justify-center">
@@ -19,7 +19,7 @@ const Register = () => {
             <img src="src\assets\comne.png" alt="" />
           </div>
         </div>
-        <div className="w-full flex flex-col items-center justify-center mt-16 ">
+        <div className="w-full flex flex-col items-center justify-center">
           <div className="px-10 py-10 border-2 w-4/5 h-auto rounded-3xl border-primaryColor bg-bgColor z-10">
             <h1 className="font-dancing font-semibold text-5xl text-center pb-5">
               Đăng ký
