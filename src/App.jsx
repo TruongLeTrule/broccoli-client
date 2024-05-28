@@ -1,19 +1,19 @@
-import React from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-
+/* eslint-disable no-unused-vars */
+import React from "react";
 import {
-  HomeLayout,
-  Error,
-  Landing,
-  Login,
-  Register,
-  Meal,
-  Planner,
-} from './pages';
+  createBrowserRouter,
+  Route,
+  RouterProvider,
+  Routes,
+} from "react-router-dom";
+
+import HomeLayout from "./layouts/HomeLayout";
+
+import { Error, Landing, Login, Register, Meal, Planner } from "./pages";
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <HomeLayout />,
     errorElement: <Error />,
     children: [
@@ -22,19 +22,19 @@ const router = createBrowserRouter([
         element: <Landing />,
       },
       {
-        path: 'login',
+        path: "login",
         element: <Login />,
       },
       {
-        path: 'register',
+        path: "register",
         element: <Register />,
       },
       {
-        path: 'meal',
+        path: "meal",
         element: <Meal />,
       },
       {
-        path: 'planner',
+        path: "planner",
         element: <Planner />,
       },
     ],
