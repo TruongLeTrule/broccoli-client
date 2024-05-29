@@ -18,7 +18,7 @@ const PopulateMeal = () => {
   const [successAlertShow, setSuccessAlertShow] = useState(false);
   const [successAlertMsg, setSuccessAlertMsg] = useState('');
   const [currentIngredient, setCurrentIngredient] = useState({
-    id: 0,
+    ingredientId: 0,
     ingredientName: '',
     ingredientValue: 0,
     ingredientUnit: 'g',
@@ -29,11 +29,11 @@ const PopulateMeal = () => {
   );
 
   const handleAddBtnClick = () => {
-    const { ingredientName, ingredientValue } = currentIngredient;
-    if (!ingredientName || !ingredientValue) return;
+    const { ingredientId, ingredientValue } = currentIngredient;
+    if (!ingredientId || !ingredientValue) return;
     setSelectedIngredientList([...selectedIngredientList, currentIngredient]);
     setCurrentIngredient({
-      id: 0,
+      ingredientId: 0,
       ingredientName: '',
       ingredientValue: 0,
       ingredientUnit: 'g',
@@ -62,11 +62,11 @@ const PopulateMeal = () => {
     });
   };
 
-  const handleIngredientClick = (ingredientName, id) => {
+  const handleIngredientClick = (ingredientName, ingredientId) => {
     setCurrentIngredient({
       ...currentIngredient,
       ingredientName,
-      id,
+      ingredientId,
     });
     setListVisible(false);
   };
@@ -142,6 +142,7 @@ const PopulateMeal = () => {
                 value={currentIngredient.ingredientValue}
                 onChange={handleInputChange}
                 name="ingredientValue"
+                placeholder="0"
                 className="w-full focus:outline-none"
               />
               <select
@@ -152,8 +153,10 @@ const PopulateMeal = () => {
                 onChange={handleInputChange}
               >
                 <option value="g">g</option>
-                <option value="mg">mg</option>
-                <option value="tbs">tbs</option>
+                <option value="tbsp">tbsp</option>
+                <option value="tsp">tsp</option>
+                <option value="cup">cup</option>
+                <option value="dash">dash</option>
               </select>
             </div>
             <button
@@ -169,15 +172,19 @@ const PopulateMeal = () => {
                 ref={ingredientListRef}
                 className="absolute bg-white -bottom-40 left-0 w-full h-40 rounded-md shadow-lg overflow-scroll"
               >
-                {ingredientFilteredList.map(({ ingredientName, id }) => (
-                  <div
-                    key={ingredientName}
-                    className="hover:bg-emerald-200 rounded-md w-full py-2 px-3 cursor-pointer"
-                    onClick={() => handleIngredientClick(ingredientName, id)}
-                  >
-                    {ingredientName}
-                  </div>
-                ))}
+                {ingredientFilteredList.map(
+                  ({ ingredientName, ingredientId }) => (
+                    <div
+                      key={ingredientName}
+                      className="hover:bg-emerald-200 rounded-md w-full py-2 px-3 cursor-pointer"
+                      onClick={() =>
+                        handleIngredientClick(ingredientName, ingredientId)
+                      }
+                    >
+                      {ingredientName}
+                    </div>
+                  )
+                )}
                 <Link
                   target="blank"
                   to="../ingredient"
