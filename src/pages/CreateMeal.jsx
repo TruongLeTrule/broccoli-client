@@ -7,7 +7,7 @@ import { useDebounce } from 'use-debounce';
 import Alert from '@mui/material/Alert';
 import removeAccent from '../utils/removeAccent';
 
-const PopulateMeal = () => {
+const CreateMeal = () => {
   const ingredientListRef = useRef();
 
   const [mealName, setMealName] = useState('');
@@ -111,6 +111,14 @@ const PopulateMeal = () => {
   return (
     <main className="h-screen flex items-center justify-center flex-col">
       <h1 className="text-2xl font-bold">Create new meal</h1>
+      <p className="text-xl font-bold">
+        or{' '}
+        <Link className="underline text-emerald-400" to="update">
+          edit meal
+        </Link>
+      </p>
+
+      {/* Form  */}
       <form className="block mt-8">
         {/* Meal name */}
         <div>
@@ -229,6 +237,7 @@ const PopulateMeal = () => {
       </form>
       {successAlertShow && <Alert severity="success">{successAlertMsg}</Alert>}
       <button
+        type="button"
         className="block mt-6 mx-auto cursor-pointer w-24 h-12 bg-emerald-400 text-white rounded-md"
         onClick={handleCreateBtnClick}
       >
@@ -237,4 +246,4 @@ const PopulateMeal = () => {
     </main>
   );
 };
-export default PopulateMeal;
+export default CreateMeal;

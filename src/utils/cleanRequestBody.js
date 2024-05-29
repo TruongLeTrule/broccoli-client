@@ -8,3 +8,13 @@ export const cleanCreateMealBody = (mealName, ingredients) => {
     })),
   };
 };
+
+export const cleanCreateIngredientBody = (ingredient, nutrients) => {
+  return {
+    ...ingredient,
+    nutrients: Object.keys(nutrients).map((key) => ({
+      nutrientId: parseInt(key),
+      nutrientValueOn100g: parseFloat(nutrients[key]),
+    })),
+  };
+};

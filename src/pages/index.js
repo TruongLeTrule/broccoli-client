@@ -9,5 +9,7 @@ export { default as Meal } from './Meal';
 // Planner pages
 export { default as Planner } from './Planner';
 // Populate pages
-export { default as PopulateMeal } from './PopulateMeal';
-export { default as PopulateIngredient } from './PopulateIngredient';
+export { default as CreateMeal } from './CreateMeal';
+export { default as CreateIngredient } from './CreateIngredient';
+export { default as UpdateMeal } from './UpdateMeal';
+export { default as UpdateIngredient } from './UpdateIngredient';

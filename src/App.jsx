@@ -9,8 +9,10 @@ import {
   Register,
   Meal,
   Planner,
-  PopulateMeal,
-  PopulateIngredient,
+  CreateMeal,
+  CreateIngredient,
+  UpdateMeal,
+  UpdateIngredient,
 } from './pages';
 
 const router = createBrowserRouter([
@@ -45,11 +47,29 @@ const router = createBrowserRouter([
         children: [
           {
             path: 'meal',
-            element: <PopulateMeal />,
+            children: [
+              {
+                index: true,
+                element: <CreateMeal />,
+              },
+              {
+                path: 'update',
+                element: <UpdateMeal />,
+              },
+            ],
           },
           {
             path: 'ingredient',
-            element: <PopulateIngredient />,
+            children: [
+              {
+                index: true,
+                element: <CreateIngredient />,
+              },
+              {
+                path: 'update',
+                element: <UpdateIngredient />,
+              },
+            ],
           },
         ],
       },
