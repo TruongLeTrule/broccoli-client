@@ -21,7 +21,7 @@ const QuickMeal = () => {
   ];
 
   return (
-    <div className="grid grid-cols-2 gap-x-10 pt-10">
+    <div className="grid grid-cols-2 gap-x-10 pt-10 px-16">
       {Meal.map((meal, i) => (
         <div key={i}>
           <div className=" w-full text-primaryColor font-dancing text-3xl font-semibold">

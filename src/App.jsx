@@ -10,6 +10,9 @@ import {
 import HomeLayout from "./layouts/HomeLayout";
 
 import { Error, Landing, Login, Register, Meal, Planner } from "./pages";
+import MealDetail from "./pages/mealdetail";
+import OneDayPlan from "./pages/oneDayPlan";
+import NutritionTargets from "./pages/nutritionTargets";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +39,18 @@ const router = createBrowserRouter([
       {
         path: "planner",
         element: <Planner />,
+      },
+      {
+        path: "mealDetail",
+        element: <MealDetail />,
+      },
+      {
+        path: "onedayplan",
+        element: <OneDayPlan />,
+      },
+      {
+        path: "nutritionTargets",
+        element: <NutritionTargets />,
       },
     ],
   },

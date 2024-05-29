@@ -1,7 +1,14 @@
 import { FcGoogle } from "react-icons/fc";
-import { FaFacebook, FaRegEyeSlash, FaRegEye } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaRegEyeSlash,
+  FaRegEye,
+  FaCheckCircle,
+} from "react-icons/fa";
 import { useState } from "react";
 import Circle from "../components/circle";
+import { FaRegUser } from "react-icons/fa";
+import { RiLockPasswordLine } from "react-icons/ri";
 
 const Login = () => {
   const [open, setOpen] = useState(false);
@@ -25,18 +32,22 @@ const Login = () => {
               Đăng nhập
             </h1>
             <div className="flex flex-col">
-              <input
-                type="text"
-                className="px-1 border-b border-textColor py-4 text-sm focus:outline-none focus:border-primaryColor focus:border-b-2 focus:shadow-md"
-                placeholder="Nhập tên đăng nhập"
-              />
+              <div className="flex flex-row items-center gap-5 border-b border-textColor focus:border-primaryColor focus:border-b-2 focus:shadow-md px-1 ">
+                <FaRegUser />
+                <input
+                  type="text"
+                  className="py-4 text-sm focus:outline-none "
+                  placeholder="Nhập tên đăng nhập"
+                />
+              </div>
               <div className="relative">
-                <div>
+                <div className="flex flex-row my-4 items-center gap-5 border-b border-textColor px-1 focus:border-primaryColor focus:border-b-2 focus:shadow-md">
+                  <RiLockPasswordLine />
                   <input
                     type={open === false ? "password" : "text"}
                     name=""
                     id=""
-                    className="px-1 my-4 border-b border-textColor py-4 text-sm focus:outline-none focus:border-primaryColor focus:border-b-2 focus:shadow-md w-full"
+                    className="py-4 text-sm focus:outline-none  w-full"
                     placeholder="Nhập mật khẩu"
                   />
                 </div>
@@ -56,18 +67,31 @@ const Login = () => {
               </div>
             </div>
             <div className="flex justify-between text-sm">
-              <div className="py-4 text-sm">
-                <input type="checkbox" name="" id="remember" className="" />
-                <label htmlFor="remember">Lưu mật khẩu</label>
+              <div className="py-4 flex flex-row items-center gap-2">
+                <div className="flex flex-row ">
+                  <label htmlFor="remember" className="cursor-pointer relative">
+                    <input
+                      type="checkbox"
+                      id="remember"
+                      className="appearance-none w-6 h-6 border border-primaryColor rounded-full"
+                    />
+                    <FaCheckCircle className="text-primaryColor text-xs w-6 h-6 absolute left-0 top-0 text-opacity-0 check1 transition" />
+                  </label>
+                </div>
+                <div>Lưu mật khẩu</div>
               </div>
+
               <button className="text-highlightColor text-sm active:scale-[.98]">
                 Quên mật khẩu?
               </button>
             </div>
             <div className="text-center flex flex-col text-sm w-1/2 justify-center sm:mx-32 lg:mx-28">
-              <button className="mt-4 py-4 px-20 bg-primaryColor rounded-3xl text-bgColor active:scale-[.98] shadow-md">
+              <a
+                href="/nutritionTargets"
+                className="mt-4 py-4 px-20 bg-primaryColor rounded-3xl text-bgColor active:scale-[.98] shadow-md"
+              >
                 Đăng nhập
-              </button>
+              </a>
               <p className="mt-4">Hoặc đăng nhập với</p>
               <div className="mt-4 flex flex- rowmt-4 py-4 border-2 border-primaryColor rounded-3xl text-primaryColor hover:bg-primaryColor hover:text-bgColor active:scale-[.98] shadow-md justify-center gap-1">
                 <FcGoogle className="size-5" />
