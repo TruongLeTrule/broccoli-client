@@ -1,16 +1,22 @@
-import { useEffect, useRef, useState } from 'react';
-import { FaPlus, FaRegTrashAlt } from 'react-icons/fa';
+import { useEffect, useState } from 'react';
+import { FaRegTrashAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { getAllIngredients } from '../../api/ingredient';
 import { createMeal } from '../../api/meal';
 import { useDebounce } from 'use-debounce';
-import Alert from '@mui/material/Alert';
 import removeAccent from '../../utils/removeAccent';
+import {
+  InputDropDown,
+  CustomAlert,
+  IngredientList,
+  SubmitBtn,
+} from '../../components/populate';
 
 const CreateMeal = () => {
-  const ingredientListRef = useRef();
-
-  const [mealName, setMealName] = useState('');
+  const [meal, setMeal] = useState({
+    mealName: '',
+    mealType: 'food',
+  });
   const [listVisible, setListVisible] = useState(false);
   const [fetchedIngredientList, setFetchedIngredientList] = useState([]);
   const [ingredientFilteredList, setIngredientFilteredList] = useState([]);
@@ -44,15 +50,6 @@ const CreateMeal = () => {
     const ingredients = await getAllIngredients();
     setFetchedIngredientList(ingredients);
     setIngredientFilteredList(ingredients);
-  };
-
-  const handleOutsideClick = (e) => {
-    if (
-      ingredientListRef.current &&
-      !ingredientListRef.current.contains(e.target)
-    ) {
-      setListVisible(false);
-    }
   };
 
   const handleInputChange = (e) => {
@@ -90,13 +87,6 @@ const CreateMeal = () => {
   };
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleOutsideClick);
-    return () => {
-      document.removeEventListener('mousedown', handleOutsideClick);
-    };
-  });
-
-  useEffect(() => {
     const filteredList = fetchedIngredientList.filter(({ ingredientName }) =>
       removeAccent(ingredientName)
         .toLowerCase()
@@ -122,52 +112,33 @@ const CreateMeal = () => {
       {/* Form  */}
       <form className="block mt-8">
         {/* Meal name */}
-        <div>
-          <label className="font-semibold">Meal name</label>
-          <input
-            value={mealName}
-            onChange={(e) => setMealName(e.target.value)}
-            className="block w-full border-2 p-2 rounded-md mt-2 focus:outline-none"
-            placeholder="Meal name"
-          />
-        </div>
+        <InputDropDown
+          label="Meal name"
+          setCurrentValue={setMeal}
+          currentValue={meal}
+          textInputName="mealName"
+          selectName="mealType"
+        />
         {/* Ingredient */}
         <div className="mt-4 w-80">
           <label className="block font-semibold mb-2">Ingredient</label>
-
           <div className="flex items-center relative pb-2">
             {/* Name */}
             <input
               onFocus={() => setListVisible(true)}
-              className="block w-full border-2 p-2 rounded-md flex-1 focus:outline-none"
+              className="block w-full border-2 p-2 rounded-md focus:outline-none"
               name="ingredientName"
               placeholder="Ingredient name"
               value={currentIngredient.ingredientName}
               onChange={handleInputChange}
             />
             {/* Quantity & unit */}
-            <div className="border-2 flex w-1/3 ml-2 p-2 rounded-md">
-              <input
-                value={currentIngredient.ingredientValue}
-                onChange={handleInputChange}
-                name="ingredientValue"
-                placeholder="0"
-                className="w-full focus:outline-none"
-              />
-              <select
-                name="ingredientUnit"
-                id="ingredientUnit"
-                className="focus:outline-none"
-                value={currentIngredient.ingredientUnit}
-                onChange={handleInputChange}
-              >
-                <option value="g">g</option>
-                <option value="tbsp">tbsp</option>
-                <option value="tsp">tsp</option>
-                <option value="cup">cup</option>
-                <option value="dash">dash</option>
-              </select>
-            </div>
+            <InputDropDown
+              setCurrentValue={setCurrentIngredient}
+              currentValue={currentIngredient}
+              textInputName="ingredientValue"
+              selectName="ingredientUnit"
+            />
             <button
               className="inline font-semibold p-4 cursor-pointer text-emerald-400"
               onClick={handleAddBtnClick}
@@ -177,31 +148,13 @@ const CreateMeal = () => {
             </button>
             {/* Fetched ingredient list */}
             {listVisible && (
-              <div
-                ref={ingredientListRef}
-                className="absolute bg-white -bottom-40 left-0 w-full h-40 rounded-md shadow-lg overflow-scroll"
-              >
-                {ingredientFilteredList.map(
-                  ({ ingredientName, ingredientId }) => (
-                    <div
-                      key={ingredientName}
-                      className="hover:bg-emerald-200 rounded-md w-full py-2 px-3 cursor-pointer"
-                      onClick={() =>
-                        handleIngredientClick(ingredientName, ingredientId)
-                      }
-                    >
-                      {ingredientName}
-                    </div>
-                  )
-                )}
-                <Link
-                  target="blank"
-                  to="../ingredient"
-                  className="hover:bg-emerald-200 rounded-md w-full p-2 flex items-center gap-2"
-                >
-                  <FaPlus className="text-xs" /> Add new ingredient
-                </Link>
-              </div>
+              <IngredientList
+                setListVisible={setListVisible}
+                renderList={ingredientFilteredList}
+                onIngredientClick={handleIngredientClick}
+                createIngredientDir="../ingredient"
+                openInOtherTab
+              />
             )}
           </div>
           {/* Selected ingredient */}
@@ -236,14 +189,8 @@ const CreateMeal = () => {
           </div>
         </div>
       </form>
-      {successAlertShow && <Alert severity="success">{successAlertMsg}</Alert>}
-      <button
-        type="button"
-        className="block mt-6 mx-auto cursor-pointer w-24 h-12 bg-emerald-400 text-white rounded-md"
-        onClick={handleCreateBtnClick}
-      >
-        Create
-      </button>
+      {successAlertShow && <CustomAlert msg={successAlertMsg} type="success" />}
+      <SubmitBtn onClick={handleCreateBtnClick} title="Create" />
     </main>
   );
 };

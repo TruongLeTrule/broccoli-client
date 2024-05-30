@@ -9,11 +9,11 @@ import {
 import { useDebounce } from 'use-debounce';
 import removeAccent from '../../utils/removeAccent';
 import {
-  IngredientInput,
   IngredientList,
   NutrientForm,
   CustomAlert,
   SubmitBtn,
+  InputDropDown,
 } from '../../components/populate';
 
 const UpdateIngredient = () => {
@@ -127,10 +127,12 @@ const UpdateIngredient = () => {
         {/* Ingredient input */}
         {ingredient && (
           <div className="relative">
-            <IngredientInput
+            <InputDropDown
               onFocus={() => setListVisible(true)}
-              setIngredient={setIngredient}
-              ingredient={ingredient}
+              setCurrentValue={setIngredient}
+              currentValue={ingredient}
+              textInputName="ingredientName"
+              selectName="ingredientType"
               label="Ingredient"
             />
             {/* Fetched ingredient list */}
@@ -139,6 +141,7 @@ const UpdateIngredient = () => {
                 setListVisible={setListVisible}
                 renderList={ingredientFilteredList}
                 onIngredientClick={handleIngredientClick}
+                createIngredientDir="../"
               />
             )}
           </div>

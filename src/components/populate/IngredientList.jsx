@@ -2,7 +2,13 @@ import { FaPlus } from 'react-icons/fa';
 import { useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-const IngredientList = ({ renderList, onIngredientClick, setListVisible }) => {
+const IngredientList = ({
+  renderList,
+  onIngredientClick,
+  setListVisible,
+  createIngredientDir,
+  openInOtherTab,
+}) => {
   const ingredientListRef = useRef();
 
   const handleOutsideClick = (e) => {
@@ -38,8 +44,8 @@ const IngredientList = ({ renderList, onIngredientClick, setListVisible }) => {
         </div>
       ))}
       <Link
-        target="blank"
-        to="../"
+        target={openInOtherTab ? '_blank' : '_self'}
+        to={createIngredientDir}
         className="hover:bg-emerald-200 rounded-md w-full p-2 flex items-center gap-2"
       >
         <FaPlus className="text-xs" /> Add new ingredient

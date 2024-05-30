@@ -4,13 +4,16 @@ import { getAllNutrients } from '../../api/nutrient';
 import { createIngredient } from '../../api/ingredient';
 import {
   CustomAlert,
-  IngredientInput,
+  InputDropDown,
   NutrientForm,
   SubmitBtn,
 } from '../../components/populate';
 
 const CreateIngredient = () => {
-  const [ingredient, setIngredient] = useState();
+  const [ingredient, setIngredient] = useState({
+    ingredientName: '',
+    ingredientType: 'meat',
+  });
   const [fetchedNutrient, setFetchedNutrient] = useState([]);
   const [nutrientForm, setNutrientForm] = useState();
   const [successAlertMsg, setSuccessAlertMsg] = useState('');
@@ -36,10 +39,6 @@ const CreateIngredient = () => {
     const initNutrientForm = {};
     nutrients.forEach(({ nutrientId }) => (initNutrientForm[nutrientId] = 0));
     setNutrientForm(initNutrientForm);
-    setIngredient({
-      ingredientName: '',
-      ingredientType: 'meat',
-    });
   };
 
   const handleCreateBtnClick = async () => {
@@ -70,9 +69,11 @@ const CreateIngredient = () => {
       <form className="block mt-8">
         {/* Ingredient name */}
         {ingredient && (
-          <IngredientInput
-            setIngredient={setIngredient}
-            ingredient={ingredient}
+          <InputDropDown
+            setCurrentValue={setIngredient}
+            currentValue={ingredient}
+            textInputName="ingredientName"
+            selectName="ingredientType"
             label="Ingredient"
           />
         )}
