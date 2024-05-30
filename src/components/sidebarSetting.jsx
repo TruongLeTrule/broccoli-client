@@ -9,27 +9,27 @@ const SidebarSetting = () => {
     },
     {
       name: "Chế độ ăn chính",
-      path: "",
+      path: "/primaryDiet",
     },
     {
       name: "Thực phẩm cần loại trừ",
-      path: "",
+      path: "/foodExclusions",
     },
     {
       name: "Thực phẩm yêu thích",
-      path: "",
+      path: "/likedFoods",
     },
     {
       name: "Thực phẩm không thích",
-      path: "",
+      path: "/BlockedFoods",
     },
     {
       name: "Thực đơn đã lưu",
-      path: "",
+      path: "/savedMeals",
     },
     {
       name: "Chỉ số thể chất",
-      path: "",
+      path: "/PhysicalStats",
     },
   ];
 

@@ -13,6 +13,12 @@ import { Error, Landing, Login, Register, Meal, Planner } from "./pages";
 import MealDetail from "./pages/mealdetail";
 import OneDayPlan from "./pages/oneDayPlan";
 import NutritionTargets from "./pages/nutritionTargets";
+import FoodExclusions from "./pages/foodExclusions";
+import PrimaryDiet from "./pages/primaryDiet";
+import PhysicalStats from "./pages/physicalStats";
+import LikedFoods from "./pages/likedFoods";
+import BlockedFoods from "./pages/blockedFoods";
+import SavedMeals from "./pages/savedMeals";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +57,30 @@ const router = createBrowserRouter([
       {
         path: "nutritionTargets",
         element: <NutritionTargets />,
+      },
+      {
+        path: "foodExclusions",
+        element: <FoodExclusions />,
+      },
+      {
+        path: "primaryDiet",
+        element: <PrimaryDiet />,
+      },
+      {
+        path: "likedFoods",
+        element: <LikedFoods />,
+      },
+      {
+        path: "blockedFoods",
+        element: <BlockedFoods />,
+      },
+      {
+        path: "savedMeals",
+        element: <SavedMeals />,
+      },
+      {
+        path: "physicalStats",
+        element: <PhysicalStats />,
       },
     ],
   },
