@@ -196,7 +196,7 @@ const UpdateMeal = () => {
                 setListVisible={setIngredientListVisible}
                 renderList={ingredientFilteredList}
                 onItemClick={handleIngredientClick}
-                createItemDir="../ingredient"
+                createItemDir="../../ingredient"
                 openInOtherTab
               />
             )}
