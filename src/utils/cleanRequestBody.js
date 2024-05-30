@@ -1,11 +1,15 @@
-export const cleanCreateMealBody = (mealName, ingredients) => {
+export const cleanCreateMealBody = (meal, ingredients) => {
+  const { mealName, mealType } = meal;
   return {
     mealName,
-    ingredients: ingredients.map(({ id, ingredientValue, ingredientUnit }) => ({
-      id: parseInt(id),
-      ingredientValue: parseFloat(ingredientValue),
-      ingredientUnit,
-    })),
+    mealType,
+    ingredients: ingredients.map(
+      ({ ingredientId, ingredientValue, ingredientUnit }) => ({
+        ingredientId: parseInt(ingredientId),
+        ingredientValue: parseFloat(ingredientValue),
+        ingredientUnit,
+      })
+    ),
   };
 };
 

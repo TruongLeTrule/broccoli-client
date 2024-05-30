@@ -9,7 +9,7 @@ import {
 import { useDebounce } from 'use-debounce';
 import removeAccent from '../../utils/removeAccent';
 import {
-  IngredientList,
+  FetchedList,
   NutrientForm,
   CustomAlert,
   SubmitBtn,
@@ -22,9 +22,10 @@ const UpdateIngredient = () => {
   });
   const [fetchedNutrient, setFetchedNutrient] = useState([]);
   const [nutrientForm, setNutrientForm] = useState();
-  const [successAlertMsg, setSuccessAlertMsg] = useState('');
-  const [successAlertShow, setSuccessAlertShow] = useState(false);
-
+  const [alert, setAlert] = useState({
+    msg: '',
+    isShow: '',
+  });
   const [fetchedIngredientList, setFetchedIngredientList] = useState([]);
   const [ingredientFilteredList, setIngredientFilteredList] = useState([]);
   const [debounceInputIngredient] = useDebounce(ingredient.ingredientName, 500);
@@ -62,11 +63,11 @@ const UpdateIngredient = () => {
     });
   };
 
-  const handleIngredientClick = async (
+  const handleIngredientClick = async ({
     ingredientName,
     ingredientId,
-    ingredientType
-  ) => {
+    ingredientType,
+  }) => {
     const nutrients = {};
     const { ingredient } = await getIngredientSpecific(ingredientId);
     ingredient.nutrients.forEach(
@@ -92,10 +93,9 @@ const UpdateIngredient = () => {
       nutrientForm
     );
     initNutrientForm(fetchedNutrient);
-    setSuccessAlertMsg(msg);
-    setSuccessAlertShow(true);
+    setAlert({ isShow: true, msg });
     setTimeout(() => {
-      setSuccessAlertShow(false);
+      setAlert({ isShow: false });
     }, 3000);
   };
 
@@ -137,10 +137,11 @@ const UpdateIngredient = () => {
             />
             {/* Fetched ingredient list */}
             {listVisible && (
-              <IngredientList
+              <FetchedList
+                type="ingredient"
                 setListVisible={setListVisible}
                 renderList={ingredientFilteredList}
-                onIngredientClick={handleIngredientClick}
+                onItemClick={handleIngredientClick}
                 createIngredientDir="../"
               />
             )}
@@ -154,9 +155,7 @@ const UpdateIngredient = () => {
             nutrientForm={nutrientForm}
           />
         )}
-        {successAlertShow && (
-          <CustomAlert msg={successAlertMsg} type="success" />
-        )}
+        {alert.isShow && <CustomAlert msg={alert.msg} type="success" />}
         <SubmitBtn onClick={handleUpdateBtnClick} title="Update" />
       </form>
     </main>

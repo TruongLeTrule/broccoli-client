@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { FaRegTrashAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { getAllIngredients } from '../../api/ingredient';
 import { createMeal } from '../../api/meal';
@@ -8,8 +7,9 @@ import removeAccent from '../../utils/removeAccent';
 import {
   InputDropDown,
   CustomAlert,
-  IngredientList,
+  FetchedList,
   SubmitBtn,
+  SelectedIngredients,
 } from '../../components/populate';
 
 const CreateMeal = () => {
@@ -59,7 +59,7 @@ const CreateMeal = () => {
     });
   };
 
-  const handleIngredientClick = (ingredientName, ingredientId) => {
+  const handleIngredientClick = ({ ingredientName, ingredientId }) => {
     setCurrentIngredient({
       ...currentIngredient,
       ingredientName,
@@ -76,8 +76,11 @@ const CreateMeal = () => {
   };
 
   const handleCreateBtnClick = async () => {
-    const response = await createMeal(mealName, selectedIngredientList);
-    setMealName('');
+    const response = await createMeal(meal, selectedIngredientList);
+    setMeal({
+      mealName: '',
+      mealType: 'food',
+    });
     setSelectedIngredientList([]);
     setSuccessAlertMsg(response.data.msg);
     setSuccessAlertShow(true);
@@ -122,7 +125,7 @@ const CreateMeal = () => {
         {/* Ingredient */}
         <div className="mt-4 w-80">
           <label className="block font-semibold mb-2">Ingredient</label>
-          <div className="flex items-center relative pb-2">
+          <div className="flex gap-x-2 items-center relative pb-2">
             {/* Name */}
             <input
               onFocus={() => setListVisible(true)}
@@ -148,11 +151,12 @@ const CreateMeal = () => {
             </button>
             {/* Fetched ingredient list */}
             {listVisible && (
-              <IngredientList
+              <FetchedList
+                type="ingredient"
                 setListVisible={setListVisible}
                 renderList={ingredientFilteredList}
-                onIngredientClick={handleIngredientClick}
-                createIngredientDir="../ingredient"
+                onItemClick={handleIngredientClick}
+                createItemDir="../ingredient"
                 openInOtherTab
               />
             )}
@@ -168,24 +172,10 @@ const CreateMeal = () => {
                 Clear all
               </button>
             )}
-            <div className="max-h-52 overflow-scroll no-scrollbar">
-              {selectedIngredientList.map(
-                ({ ingredientName, ingredientValue, ingredientUnit }) => (
-                  <div
-                    key={ingredientName}
-                    className="flex justify-between py-2"
-                  >
-                    <span>
-                      {ingredientName}: {ingredientValue} {ingredientUnit}
-                    </span>
-                    <FaRegTrashAlt
-                      className="text-red-400 text-sm cursor-pointer"
-                      onClick={() => removeFromList(ingredientName)}
-                    />
-                  </div>
-                )
-              )}
-            </div>
+            <SelectedIngredients
+              removeIngredient={removeFromList}
+              ingredients={selectedIngredientList}
+            />
           </div>
         </div>
       </form>

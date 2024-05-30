@@ -26,7 +26,7 @@ const InputDropDown = ({
   return (
     <div>
       {label && <label className="font-semibold">{label}</label>}
-      <div className="flex w-full border-2 ml-2 p-2 rounded-md justify-center">
+      <div className="flex w-full border-2 p-2 rounded-md justify-center">
         <input
           onFocus={onFocus}
           value={currentValue[textInputName]}
