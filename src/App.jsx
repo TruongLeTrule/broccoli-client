@@ -1,19 +1,22 @@
-/* eslint-disable no-unused-vars */
-import React from "react";
+import React from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import {
-  createBrowserRouter,
-  Route,
-  RouterProvider,
-  Routes,
-} from "react-router-dom";
-
-import HomeLayout from "./layouts/HomeLayout";
-
-import { Error, Landing, Login, Register, Meal, Planner } from "./pages";
+  Error,
+  Landing,
+  Login,
+  Register,
+  Meal,
+  Planner,
+  CreateMeal,
+  CreateIngredient,
+  UpdateMeal,
+  UpdateIngredient,
+} from './pages';
+import HomeLayout from './layouts/HomeLayout';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <HomeLayout />,
     errorElement: <Error />,
     children: [
@@ -22,20 +25,52 @@ const router = createBrowserRouter([
         element: <Landing />,
       },
       {
-        path: "login",
+        path: 'login',
         element: <Login />,
       },
       {
-        path: "register",
+        path: 'register',
         element: <Register />,
       },
       {
-        path: "meal",
+        path: 'meal',
         element: <Meal />,
       },
       {
-        path: "planner",
+        path: 'planner',
         element: <Planner />,
+      },
+
+      {
+        path: 'populate',
+        children: [
+          {
+            path: 'meal',
+            children: [
+              {
+                index: true,
+                element: <CreateMeal />,
+              },
+              {
+                path: 'update',
+                element: <UpdateMeal />,
+              },
+            ],
+          },
+          {
+            path: 'ingredient',
+            children: [
+              {
+                index: true,
+                element: <CreateIngredient />,
+              },
+              {
+                path: 'update',
+                element: <UpdateIngredient />,
+              },
+            ],
+          },
+        ],
       },
     ],
   },
