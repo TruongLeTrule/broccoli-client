@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { FaPlus, FaRegTrashAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import { getAllIngredients } from '../api/ingredient';
-import { createMeal } from '../api/meal';
+import { getAllIngredients } from '../../api/ingredient';
+import { createMeal } from '../../api/meal';
 import { useDebounce } from 'use-debounce';
 import Alert from '@mui/material/Alert';
-import removeAccent from '../utils/removeAccent';
+import removeAccent from '../../utils/removeAccent';
 
 const CreateMeal = () => {
   const ingredientListRef = useRef();
