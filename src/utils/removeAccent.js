@@ -1,3 +1,4 @@
+// Normalize Vietnamese character
 export default (str) =>
   str
     .normalize('NFD')

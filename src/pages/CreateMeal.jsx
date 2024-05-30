@@ -97,9 +97,6 @@ const CreateMeal = () => {
   });
 
   useEffect(() => {
-    // Fetch all if ingredients list length = 0
-    if (fetchedIngredientList.length === 0) fetchIngredients();
-
     const filteredList = fetchedIngredientList.filter(({ ingredientName }) =>
       removeAccent(ingredientName)
         .toLowerCase()
@@ -107,6 +104,10 @@ const CreateMeal = () => {
     );
     setIngredientFilteredList(filteredList);
   }, [debounceInputIngredient]);
+
+  useEffect(() => {
+    fetchIngredients();
+  }, []);
 
   return (
     <main className="h-screen flex items-center justify-center flex-col">
