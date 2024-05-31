@@ -40,35 +40,34 @@ const router = createBrowserRouter([
         path: 'planner',
         element: <Planner />,
       },
-
+    ],
+  },
+  {
+    path: 'populate',
+    children: [
       {
-        path: 'populate',
+        path: 'meal',
         children: [
           {
-            path: 'meal',
-            children: [
-              {
-                index: true,
-                element: <CreateMeal />,
-              },
-              {
-                path: 'update',
-                element: <UpdateMeal />,
-              },
-            ],
+            index: true,
+            element: <CreateMeal />,
           },
           {
-            path: 'ingredient',
-            children: [
-              {
-                index: true,
-                element: <CreateIngredient />,
-              },
-              {
-                path: 'update',
-                element: <UpdateIngredient />,
-              },
-            ],
+            path: 'update',
+            element: <UpdateMeal />,
+          },
+        ],
+      },
+      {
+        path: 'ingredient',
+        children: [
+          {
+            index: true,
+            element: <CreateIngredient />,
+          },
+          {
+            path: 'update',
+            element: <UpdateIngredient />,
           },
         ],
       },
@@ -79,4 +78,5 @@ const router = createBrowserRouter([
 const App = () => {
   return <RouterProvider router={router} />;
 };
+
 export default App;

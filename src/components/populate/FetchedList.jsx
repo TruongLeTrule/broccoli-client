@@ -28,13 +28,13 @@ const FetchedList = ({
   return (
     <div
       ref={listRef}
-      className="absolute bg-white -bottom-40 left-0 w-full h-40 rounded-md shadow-lg overflow-scroll z-50"
+      className="absolute bg-bgColor -bottom-40 left-0 w-full h-40 rounded-md shadow-lg overflow-scroll z-50"
     >
       {renderList.map((item, index) => {
         return (
           <div
             key={index}
-            className="hover:bg-emerald-200 rounded-md w-full py-2 px-3 cursor-pointer"
+            className="hover:bg-secondaryColor rounded-md w-full py-2 px-3 cursor-pointer"
             onClick={() => onItemClick(item)}
           >
             {type === 'meal' ? item?.mealName : item?.ingredientName}
@@ -44,7 +44,7 @@ const FetchedList = ({
       <Link
         target={openInOtherTab ? '_blank' : '_self'}
         to={createItemDir}
-        className="hover:bg-emerald-200 rounded-md w-full p-2 flex items-center gap-2"
+        className="hover:secondaryColor rounded-md w-full p-2 flex items-center gap-2"
       >
         <FaPlus className="text-xs" /> Add new {type}
       </Link>

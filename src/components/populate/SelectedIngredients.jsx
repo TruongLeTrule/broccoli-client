@@ -10,7 +10,7 @@ const SelectedIngredients = ({ ingredients, removeIngredient }) => {
               {ingredientName}: {ingredientValue} {ingredientUnit}
             </span>
             <FaRegTrashAlt
-              className="text-red-400 text-sm cursor-pointer"
+              className="text-highlightColor text-sm cursor-pointer"
               onClick={() => removeIngredient(ingredientName)}
             />
           </div>

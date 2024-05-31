@@ -107,7 +107,7 @@ const CreateMeal = () => {
       <h1 className="text-2xl font-bold">Create new meal</h1>
       <p className="text-xl font-bold">
         or{' '}
-        <Link className="underline text-emerald-400" to="update">
+        <Link className="underline text-primaryColor" to="update">
           edit meal
         </Link>
       </p>
@@ -143,7 +143,7 @@ const CreateMeal = () => {
               selectName="ingredientUnit"
             />
             <button
-              className="inline font-semibold p-4 cursor-pointer text-emerald-400"
+              className="inline font-semibold p-4 cursor-pointer text-primaryColor"
               onClick={handleAddBtnClick}
               type="button"
             >
@@ -165,7 +165,7 @@ const CreateMeal = () => {
           <div className="my-4">
             {selectedIngredientList.length > 0 && (
               <button
-                className="underline text-red-400"
+                className="underline text-highlightColor"
                 onClick={() => setSelectedIngredientList([])}
                 type="button"
               >
