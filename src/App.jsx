@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from "react";
 import {
   createBrowserRouter,
@@ -9,7 +8,18 @@ import {
 
 import HomeLayout from "./layouts/HomeLayout";
 
-import { Error, Landing, Login, Register, Meal, Planner } from "./pages";
+import {
+  Error,
+  Landing,
+  Login,
+  Register,
+  Meal,
+  Planner,
+  CreateMeal,
+  CreateIngredient,
+  UpdateMeal,
+  UpdateIngredient,
+} from "./pages";
 import MealDetail from "./pages/mealdetail";
 import OneDayPlan from "./pages/oneDayPlan";
 import NutritionTargets from "./pages/nutritionTargets";
@@ -84,9 +94,41 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "populate",
+    children: [
+      {
+        path: "meal",
+        children: [
+          {
+            index: true,
+            element: <CreateMeal />,
+          },
+          {
+            path: "update",
+            element: <UpdateMeal />,
+          },
+        ],
+      },
+      {
+        path: "ingredient",
+        children: [
+          {
+            index: true,
+            element: <CreateIngredient />,
+          },
+          {
+            path: "update",
+            element: <UpdateIngredient />,
+          },
+        ],
+      },
+    ],
+  },
 ]);
 
 const App = () => {
   return <RouterProvider router={router} />;
 };
+
 export default App;

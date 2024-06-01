@@ -59,7 +59,7 @@ const Nav = () => {
         <div className="flex items-baseline justify-between ">
           <a
             href=""
-            className="font-dancing font-semibold text-6xl md:px-20 pt-10 pb-5"
+            className="font-dancing font-semibold text-6xl md:px-20 pt-10 pb-2"
           >
             Broccoli
           </a>

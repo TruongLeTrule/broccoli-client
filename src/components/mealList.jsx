@@ -1,5 +1,13 @@
 ﻿import React from "react";
 
+import axios from "axios";
+import { cleanCreateMealBody } from "../utils/cleanRequestBody";
+
+const baseUrl = "http://localhost:3000/api/v1/meals";
+
+export const getAllMeals = () =>
+  axios.get(baseUrl).then((response) => response.data.meals);
+
 const MealList = () => {
   const mealInfo = [
     {

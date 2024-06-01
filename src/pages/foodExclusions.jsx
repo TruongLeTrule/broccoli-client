@@ -34,7 +34,7 @@ const FoodExclusions = () => {
 
   return (
     <div className="mt-40 flex flex-row px-32 gap-20">
-      <div className="w-1/2">
+      <div className="">
         <SidebarSetting />
       </div>
       <div className="flex flex-col gap-10">

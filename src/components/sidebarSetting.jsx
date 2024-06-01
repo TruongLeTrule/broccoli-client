@@ -34,7 +34,7 @@ const SidebarSetting = () => {
   ];
 
   return (
-    <div className="border border-primaryColor px-10 py-5 rounded-2xl">
+    <div className="border border-primaryColor px-10 py-5 rounded-2xl w-[300px]">
       {sidebar.map(({ name, path }) => (
         <li key={name} className="py-3 list-none">
           <Link
