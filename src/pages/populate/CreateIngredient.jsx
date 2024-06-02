@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getAllNutrients } from '../../api/nutrient';
-import { createIngredient } from '../../api/ingredient';
+import { createIngredient } from '../../apis/ingredient';
+import { getAllNutrients } from '../../apis/nutrient';
 import {
   CustomAlert,
   InputDropDown,

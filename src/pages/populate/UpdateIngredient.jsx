@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getAllNutrients } from '../../api/nutrient';
+import { getAllNutrients } from '../../apis/nutrient';
 import {
   getAllIngredients,
   getIngredientSpecific,
   updateIngredient,
-} from '../../api/ingredient';
+} from '../../apis/ingredient';
 import { useDebounce } from 'use-debounce';
 import removeAccent from '../../utils/removeAccent';
 import {

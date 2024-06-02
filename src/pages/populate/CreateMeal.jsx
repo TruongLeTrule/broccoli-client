@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getAllIngredients } from '../../api/ingredient';
-import { createMeal } from '../../api/meal';
+import { getAllIngredients } from '../../apis/ingredient';
+import { createMeal } from '../../apis/meal';
 import { useDebounce } from 'use-debounce';
 import removeAccent from '../../utils/removeAccent';
 import {

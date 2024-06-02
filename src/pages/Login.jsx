@@ -1,14 +1,36 @@
-import { FcGoogle } from "react-icons/fc";
-import { FaFacebook, FaRegEyeSlash, FaRegEye } from "react-icons/fa";
-import { useState } from "react";
-import Circle from "../components/circle";
+import { FcGoogle } from 'react-icons/fc';
+import { FaFacebook } from 'react-icons/fa';
+import {
+  Link,
+  Form,
+  redirect,
+  useNavigation,
+  useActionData,
+} from 'react-router-dom';
+import Circle from '../components/circle';
+import FormRow from '../components/FormRow';
+import { login } from '../apis/auth';
+import { toast } from 'react-toastify';
+
+export const action = async ({ request }) => {
+  const error = { msg: '' };
+  const formData = await request.formData();
+  const { username, password } = Object.fromEntries(formData);
+
+  try {
+    await login({ username, password });
+    toast.success('Đăng nhập thành công');
+    return redirect('/planner');
+  } catch (err) {
+    error.msg = err?.response?.data?.msg;
+    return error;
+  }
+};
 
 const Login = () => {
-  const [open, setOpen] = useState(false);
-
-  const togglePassword = () => {
-    setOpen(!open);
-  };
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === 'submitting';
+  const error = useActionData();
 
   return (
     <div className="mt-28">
@@ -19,41 +41,28 @@ const Login = () => {
             <img src="src\assets\comne.png" alt="" />
           </div>
         </div>
-        <div className="w-full flex flex-col items-center justify-center">
+        <Form
+          method="post"
+          className="w-full flex flex-col items-center justify-center"
+        >
           <div className="px-10 py-10 border-2 w-4/5 h-auto rounded-3xl border-primaryColor bg-bgColor z-10">
             <h1 className="font-dancing font-semibold text-5xl text-center pb-5">
               Đăng nhập
             </h1>
             <div className="flex flex-col">
-              <input
+              <FormRow
+                name="username"
                 type="text"
-                className="px-1 border-b border-textColor py-4 text-sm focus:outline-none focus:border-primaryColor focus:border-b-2 focus:shadow-md"
                 placeholder="Nhập tên đăng nhập"
+                defaultValue="truongle"
               />
-              <div className="relative">
-                <div>
-                  <input
-                    type={open === false ? "password" : "text"}
-                    name=""
-                    id=""
-                    className="px-1 my-4 border-b border-textColor py-4 text-sm focus:outline-none focus:border-primaryColor focus:border-b-2 focus:shadow-md w-full"
-                    placeholder="Nhập mật khẩu"
-                  />
-                </div>
-                <div className="absolute top-9 right-5 place-items-center">
-                  {open ? (
-                    <FaRegEye
-                      onClick={togglePassword}
-                      className="cursor-pointer"
-                    />
-                  ) : (
-                    <FaRegEyeSlash
-                      onClick={togglePassword}
-                      className="cursor-pointer"
-                    />
-                  )}
-                </div>
-              </div>
+              <FormRow
+                name="password"
+                type="password"
+                placeholder="Nhập mật khẩu"
+                defaultValue="truongle"
+              />
+              {error && <span className="text-redDanger">{error.msg}</span>}
             </div>
             <div className="flex justify-between text-sm">
               <div className="py-4 text-sm">
@@ -65,8 +74,11 @@ const Login = () => {
               </button>
             </div>
             <div className="text-center flex flex-col text-sm w-1/2 justify-center sm:mx-32 lg:mx-28">
-              <button className="mt-4 py-4 px-20 bg-primaryColor rounded-3xl text-bgColor active:scale-[.98] shadow-md">
-                Đăng nhập
+              <button
+                disabled={isSubmitting}
+                className="mt-4 py-4 px-20 bg-primaryColor rounded-3xl text-bgColor active:scale-[.98] shadow-md"
+              >
+                {isSubmitting ? 'Đang tải...' : 'Đăng nhập'}
               </button>
               <p className="mt-4">Hoặc đăng nhập với</p>
               <div className="mt-4 flex flex- rowmt-4 py-4 border-2 border-primaryColor rounded-3xl text-primaryColor hover:bg-primaryColor hover:text-bgColor active:scale-[.98] shadow-md justify-center gap-1">
@@ -77,15 +89,15 @@ const Login = () => {
                 <FaFacebook className="size-5" />
                 <button className="">Tài khoản Facebook</button>
               </div>
-              <a
-                href="/Register"
+              <Link
+                to="/register"
                 className="mt-4 text-highlightColor active:scale-[.98]"
               >
                 Bạn chưa có tài khoản?
-              </a>
+              </Link>
             </div>
           </div>
-        </div>
+        </Form>
       </div>
     </div>
   );
