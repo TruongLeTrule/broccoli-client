@@ -7,20 +7,24 @@ import {
   Register,
   Meal,
   Planner,
+  Admin,
   CreateMeal,
   CreateIngredient,
   UpdateMeal,
   UpdateIngredient,
 } from './pages';
-import HomeLayout from './layouts/HomeLayout';
 import { action as registerAction } from './pages/Register';
 import { action as loginAction } from './pages/Login';
+import { AdminLayout, HomeLayout } from './layouts';
+import { adminLoader } from './layouts/AdminLayout';
+import { homeLayoutLoader } from './layouts/HomeLayout';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <HomeLayout />,
     errorElement: <Error />,
+    loader: homeLayoutLoader,
     children: [
       {
         index: true,
@@ -47,13 +51,19 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: 'populate',
+    path: 'admin',
+    element: <AdminLayout />,
+    loader: adminLoader,
     children: [
+      {
+        index: true,
+        element: <Admin />,
+      },
       {
         path: 'meal',
         children: [
           {
-            index: true,
+            path: 'create',
             element: <CreateMeal />,
           },
           {
@@ -66,7 +76,7 @@ const router = createBrowserRouter([
         path: 'ingredient',
         children: [
           {
-            index: true,
+            path: 'create',
             element: <CreateIngredient />,
           },
           {
