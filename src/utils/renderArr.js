@@ -16,3 +16,37 @@ export const ingredientTypes = [
 export const ingredientUnits = ['g', 'tbsp', 'tsp', 'cup', 'dash'];
 
 export const mealTypes = ['food', 'fruit', 'drink', 'snack'];
+
+export const loggedInNavItems = [
+  {
+    name: 'Món ăn',
+    path: '/meal',
+  },
+  {
+    name: 'Kế hoạch',
+    path: '/planner',
+  },
+  {
+    name: 'Hồ sơ',
+    path: '/user',
+  },
+];
+
+export const defaultNavItems = [
+  {
+    name: 'Trang chủ',
+    path: '/',
+  },
+  {
+    name: 'Món ăn',
+    path: '/meal',
+  },
+  {
+    name: 'Kế hoạch',
+    path: '/planner',
+  },
+  {
+    name: 'Đăng nhập',
+    path: '/login',
+  },
+];

@@ -1,14 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import React from 'react';
 import { HiOutlineMenu } from 'react-icons/hi';
 import { FaXmark } from 'react-icons/fa6';
 import { NavLink } from 'react-router-dom';
-import { useHomeLayoutContext } from '../layouts/HomeLayout';
+import { defaultNavItems, loggedInNavItems } from '../utils/renderArr';
+import useAuthStore from '../states/authState';
 
 const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
-  const { user } = useHomeLayoutContext();
+  const { user } = useAuthStore((state) => state);
 
   // set toggle Menu
   const toggleMenu = () => {
@@ -30,26 +31,9 @@ const Nav = () => {
     };
   });
 
-  const resolveNavItems = () => {
-    return [
-      {
-        name: 'Trang chủ',
-        path: '/',
-      },
-      {
-        name: 'Món ăn',
-        path: '/meal',
-      },
-      {
-        name: 'Kế hoạch',
-        path: '/planner',
-      },
-      {
-        name: !user ? 'Đăng nhập' : 'Hồ sơ',
-        path: !user ? '/login' : '/user',
-      },
-    ];
-  };
+  const navItems = useMemo(() => {
+    return user ? loggedInNavItems : defaultNavItems;
+  }, [user]);
 
   return (
     <header className="w-full bg-bgColor md:bg-transparent fixed top-0 left-0 right-0 z-50">
@@ -68,7 +52,7 @@ const Nav = () => {
             Broccoli
           </a>
           <ul className="md:flex space-x-12 hidden px-20">
-            {resolveNavItems().map(({ name, path }) => (
+            {navItems.map(({ name, path }) => (
               <li key={name} className="">
                 <NavLink
                   to={path}
@@ -96,7 +80,6 @@ const Nav = () => {
             </button>
           </div>
         </div>
-
         <div
           className={`space-y-4 px-4 py-4 mt-32 border-2 border-primaryColor bg-bgColor rounded-md ${
             isMenuOpen ? 'block fixed top-0 left-0 right-0' : 'hidden'

@@ -15,8 +15,9 @@ import {
 } from './pages';
 import { action as registerAction } from './pages/Register';
 import { action as loginAction } from './pages/Login';
-import { AdminLayout, HomeLayout } from './layouts';
+import { AdminLayout, HomeLayout, UserLayout } from './layouts';
 import { adminLoader } from './layouts/AdminLayout';
+import { userLoader } from './layouts/UserLayout';
 import { homeLayoutLoader } from './layouts/HomeLayout';
 
 const router = createBrowserRouter([
@@ -49,6 +50,11 @@ const router = createBrowserRouter([
         element: <Planner />,
       },
     ],
+  },
+  {
+    path: 'user',
+    element: <UserLayout />,
+    loader: userLoader,
   },
   {
     path: 'admin',
