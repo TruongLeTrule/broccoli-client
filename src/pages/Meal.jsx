@@ -1,5 +1,6 @@
-import MealList from "../components/mealList";
-import { IoIosSearch } from "react-icons/io";
+import { Outlet } from 'react-router-dom';
+import MealList from '../components/mealList';
+import { IoIosSearch } from 'react-icons/io';
 
 const Meal = () => {
   return (
@@ -25,6 +26,8 @@ const Meal = () => {
       <button className="text-primaryColor hover:text-btnColor">
         Xem thêm
       </button>
+
+      <Outlet />
     </div>
   );
 };

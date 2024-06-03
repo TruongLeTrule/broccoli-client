@@ -1,10 +1,13 @@
-﻿import React from "react";
-import FoodRecipe from "../components/foodRecipe";
-import CaloriesChart from "../components/caloriesChart";
-import CaloriesDetails from "../components/caloriesDetails";
-import { useParams } from "react-router-dom";
+﻿import React from 'react';
+import FoodRecipe from '../components/foodRecipe';
+import CaloriesChart from '../components/caloriesChart';
+import CaloriesDetails from '../components/caloriesDetails';
+import { useParams } from 'react-router-dom';
 
 const MealDetail = () => {
+  const { id } = useParams();
+  console.log(id);
+
   return (
     <div className="mt-40">
       <FoodRecipe />
