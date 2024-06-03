@@ -1,30 +1,32 @@
-import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { getAllNutrients } from '../../apis/nutrient';
+import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getAllNutrients } from "../../apis/nutrient";
+
 import {
   getAllIngredients,
   getIngredientSpecific,
   updateIngredient,
-} from '../../apis/ingredient';
-import { useDebounce } from 'use-debounce';
-import removeAccent from '../../utils/removeAccent';
+} from "../../apis/ingredient";
+import { useDebounce } from "use-debounce";
+import removeAccent from "../../utils/removeAccent";
+
 import {
   FetchedList,
   NutrientForm,
   CustomAlert,
   SubmitBtn,
   InputDropDown,
-} from '../../components/populate';
+} from "../../components/populate";
 
 const UpdateIngredient = () => {
   const [ingredient, setIngredient] = useState({
-    ingredientName: '',
+    ingredientName: "",
   });
   const [fetchedNutrient, setFetchedNutrient] = useState([]);
   const [nutrientForm, setNutrientForm] = useState();
   const [alert, setAlert] = useState({
-    msg: '',
-    isShow: '',
+    msg: "",
+    isShow: "",
   });
   const [fetchedIngredientList, setFetchedIngredientList] = useState([]);
   const [ingredientFilteredList, setIngredientFilteredList] = useState([]);
@@ -34,7 +36,7 @@ const UpdateIngredient = () => {
   const fetchNutrient = async () => {
     const { nutrients } = await getAllNutrients();
     const filteredNutrients = nutrients.filter(
-      ({ nutrientType }) => nutrientType === 'macro'
+      ({ nutrientType }) => nutrientType === "macro"
     );
     setFetchedNutrient(filteredNutrients);
     initNutrientForm(filteredNutrients);
@@ -58,8 +60,8 @@ const UpdateIngredient = () => {
     nutrients.forEach(({ nutrientId }) => (initNutrientForm[nutrientId] = 0));
     setNutrientForm(initNutrientForm);
     setIngredient({
-      ingredientName: '',
-      ingredientType: 'meat',
+      ingredientName: "",
+      ingredientType: "meat",
     });
   };
 
@@ -117,7 +119,7 @@ const UpdateIngredient = () => {
     <main className="h-screen flex items-center justify-center flex-col">
       <h1 className="text-2xl font-bold">Edit ingredient</h1>
       <p className="text-xl font-bold">
-        or{' '}
+        or{" "}
         <Link className="underline text-primaryColor" to="../">
           create new ingredient
         </Link>

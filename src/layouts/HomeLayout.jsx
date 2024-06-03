@@ -1,9 +1,9 @@
-import { Outlet, useLoaderData } from 'react-router-dom';
-import Nav from '../components/Nav';
-import Footer from '../components/Footer';
-import { getCurrentUser } from '../apis/user';
-import useAuthStore from '../states/authState';
-import { useEffect } from 'react';
+import { Outlet, useLoaderData } from "react-router-dom";
+import Nav from "../components/Nav";
+import Footer from "../components/footer";
+import { getCurrentUser } from "../apis/user";
+import useAuthStore from "../states/authState";
+import { useEffect } from "react";
 
 export const homeLayoutLoader = async () => {
   try {
@@ -15,7 +15,8 @@ export const homeLayoutLoader = async () => {
 };
 
 const HomeLayout = () => {
-  const { user } = useLoaderData();
+  console.log(useLoaderData);
+  const { user } = useLoaderData() || {};
   const { setUser } = useAuthStore((state) => state);
 
   useEffect(() => {

@@ -1,26 +1,27 @@
-import { FcGoogle } from 'react-icons/fc';
-import { FaFacebook } from 'react-icons/fa';
+import { FcGoogle } from "react-icons/fc";
+import { FaFacebook } from "react-icons/fa";
+import { FaCheckCircle } from "react-icons/fa";
 import {
   Link,
   Form,
   redirect,
   useNavigation,
   useActionData,
-} from 'react-router-dom';
-import Circle from '../components/circle';
-import FormRow from '../components/FormRow';
-import { login } from '../apis/auth';
-import { toast } from 'react-toastify';
+} from "react-router-dom";
+import Circle from "../components/circle";
+import FormRow from "../components/FormRow";
+import { login } from "../apis/auth";
+import { toast } from "react-toastify";
 
 export const action = async ({ request }) => {
-  const error = { msg: '' };
+  const error = { msg: "" };
   const formData = await request.formData();
   const { username, password } = Object.fromEntries(formData);
 
   try {
     await login({ username, password });
-    toast.success('Đăng nhập thành công');
-    return redirect('/planner');
+    toast.success("Đăng nhập thành công");
+    return redirect("/user/nutritionTargets");
   } catch (err) {
     error.msg = err?.response?.data?.msg;
     return error;
@@ -29,7 +30,7 @@ export const action = async ({ request }) => {
 
 const Login = () => {
   const navigation = useNavigation();
-  const isSubmitting = navigation.state === 'submitting';
+  const isSubmitting = navigation.state === "submitting";
   const error = useActionData();
 
   return (
@@ -65,10 +66,20 @@ const Login = () => {
               {error && <span className="text-redDanger">{error.msg}</span>}
             </div>
             <div className="flex justify-between text-sm">
-              <div className="py-4 text-sm">
-                <input type="checkbox" name="" id="remember" className="" />
-                <label htmlFor="remember">Lưu mật khẩu</label>
+              <div className="py-4 flex flex-row items-center gap-2">
+                <div className="flex flex-row ">
+                  <label htmlFor="remember" className="cursor-pointer relative">
+                    <input
+                      type="checkbox"
+                      id="remember"
+                      className="appearance-none w-6 h-6 border border-primaryColor rounded-full"
+                    />
+                    <FaCheckCircle className="text-primaryColor text-xs w-6 h-6 absolute left-0 top-0 text-opacity-0 check1 transition" />
+                  </label>
+                </div>
+                <div>Lưu mật khẩu</div>
               </div>
+
               <button className="text-highlightColor text-sm active:scale-[.98]">
                 Quên mật khẩu?
               </button>
@@ -78,8 +89,9 @@ const Login = () => {
                 disabled={isSubmitting}
                 className="mt-4 py-4 px-20 bg-primaryColor rounded-3xl text-bgColor active:scale-[.98] shadow-md"
               >
-                {isSubmitting ? 'Đang tải...' : 'Đăng nhập'}
+                {isSubmitting ? "Đang tải..." : "Đăng nhập"}
               </button>
+
               <p className="mt-4">Hoặc đăng nhập với</p>
               <div className="mt-4 flex flex- rowmt-4 py-4 border-2 border-primaryColor rounded-3xl text-primaryColor hover:bg-primaryColor hover:text-bgColor active:scale-[.98] shadow-md justify-center gap-1">
                 <FcGoogle className="size-5" />

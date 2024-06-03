@@ -4,3 +4,11 @@
 body {
   font-family: 'Poppins', sans-serif;
 }
+
+.checkedi:checked ~ .check1 {
+  @apply text-opacity-100;
+}
+
+#remember:checked ~ .check1 {
+  @apply text-opacity-100;
+}
