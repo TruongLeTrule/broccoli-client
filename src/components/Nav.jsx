@@ -1,12 +1,15 @@
-import { useEffect, useState } from "react";
-import React from "react";
-import { HiOutlineMenu } from "react-icons/hi";
-import { FaXmark } from "react-icons/fa6";
-import { Link, NavLink } from "react-router-dom";
+import { useEffect, useMemo, useState } from 'react';
+import React from 'react';
+import { HiOutlineMenu } from 'react-icons/hi';
+import { FaXmark } from 'react-icons/fa6';
+import { NavLink } from 'react-router-dom';
+import { defaultNavItems, loggedInNavItems } from '../utils/renderArr';
+import useAuthStore from '../states/authState';
 
 const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
+  const { user } = useAuthStore((state) => state);
 
   // set toggle Menu
   const toggleMenu = () => {
@@ -21,39 +24,24 @@ const Nav = () => {
         setIsSticky(false);
       }
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
   });
 
-  // nav items array
-  const navItems = [
-    {
-      name: "Trang chủ",
-      path: "/",
-    },
-    {
-      name: "Món ăn",
-      path: "/meal",
-    },
-    {
-      name: "Kế hoạch",
-      path: "/planner",
-    },
-    {
-      name: "Đăng nhập",
-      path: "/login",
-    },
-  ];
+  const navItems = useMemo(() => {
+    return user ? loggedInNavItems : defaultNavItems;
+  }, [user]);
+
   return (
     <header className="w-full bg-bgColor md:bg-transparent fixed top-0 left-0 right-0 z-50">
       <nav
         className={`lg:px-14 px-4 ${
           isSticky
-            ? "sticky top-0 left-0 right-0 bg-white duration-300 shadow-md"
-            : ""
+            ? 'sticky top-0 left-0 right-0 bg-white duration-300 shadow-md'
+            : ''
         }`}
       >
         <div className="flex items-baseline justify-between ">
@@ -70,8 +58,8 @@ const Nav = () => {
                   to={path}
                   className={({ isActive }) => {
                     return !isActive
-                      ? "border-none py-2 px-2 text-textColor hover:text-primaryColor "
-                      : "border-b-4 py-2 px-2 text-primaryColor";
+                      ? 'border-none py-2 px-2 text-textColor hover:text-primaryColor '
+                      : 'border-b-4 py-2 px-2 text-primaryColor';
                   }}
                 >
                   {name}
@@ -92,10 +80,9 @@ const Nav = () => {
             </button>
           </div>
         </div>
-
         <div
           className={`space-y-4 px-4 py-4 mt-32 border-2 border-primaryColor bg-bgColor rounded-md ${
-            isMenuOpen ? "block fixed top-0 left-0 right-0" : "hidden"
+            isMenuOpen ? 'block fixed top-0 left-0 right-0' : 'hidden'
           }`}
         >
           {navItems.map(({ name, path }) => (

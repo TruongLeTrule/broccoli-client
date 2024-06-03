@@ -1,14 +1,40 @@
-import { FcGoogle } from "react-icons/fc";
-import { FaFacebook, FaRegEyeSlash, FaRegEye } from "react-icons/fa";
-import { useState } from "react";
-import Circle from "../components/circle";
+import {
+  Form,
+  Link,
+  redirect,
+  useNavigation,
+  useActionData,
+} from 'react-router-dom';
+import { FcGoogle } from 'react-icons/fc';
+import { FaFacebook } from 'react-icons/fa';
+import Circle from '../components/circle';
+import FormRow from '../components/FormRow';
+import { register } from '../apis/auth';
+import { toast } from 'react-toastify';
+
+export const action = async ({ request }) => {
+  const formData = await request.formData();
+  const error = { msg: '' };
+  const { username, password, confirmPassword } = Object.fromEntries(formData);
+
+  try {
+    if (password !== confirmPassword) {
+      error.msg = 'Mật khẩu không trùng khớp';
+      return error;
+    }
+    await register({ username, password });
+    toast.success('Đăng ký thành công');
+    return redirect('/login');
+  } catch (err) {
+    error.msg = err?.response?.data?.msg;
+    return error;
+  }
+};
 
 const Register = () => {
-  const [open, setOpen] = useState(false);
-
-  const togglePassword = () => {
-    setOpen(!open);
-  };
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === 'submitting';
+  const error = useActionData();
 
   return (
     <div className="mt-28">
@@ -19,76 +45,51 @@ const Register = () => {
             <img src="src\assets\comne.png" alt="" />
           </div>
         </div>
-        <div className="w-full flex flex-col items-center justify-center">
+        <Form
+          method="post"
+          className="w-full flex flex-col items-center justify-center"
+        >
           <div className="px-10 py-10 border-2 w-4/5 h-auto rounded-3xl border-primaryColor bg-bgColor z-10">
             <h1 className="font-dancing font-semibold text-5xl text-center pb-5">
               Đăng ký
             </h1>
+
             <div className="flex flex-col">
-              <div>
-                <input
-                  type="text"
-                  className="px-1 border-b border-textColor py-4 text-sm focus:outline-none focus:border-primaryColor focus:border-b-2 focus:shadow-md w-full"
-                  placeholder="Nhập tên đăng nhập"
-                />
-              </div>
-              <div className="relative ">
-                <input
-                  type={open === false ? "password" : "text"}
-                  name=""
-                  id=""
-                  className="px-1 my-4 border-b border-textColor py-4 text-sm focus:outline-none focus:border-primaryColor focus:border-b-2 focus:shadow-md w-full"
-                  placeholder="Nhập mật khẩu"
-                />
-                <div className="absolute top-9 right-5">
-                  {open ? (
-                    <FaRegEye
-                      onClick={togglePassword}
-                      className="cursor-pointer"
-                    />
-                  ) : (
-                    <FaRegEyeSlash
-                      onClick={togglePassword}
-                      className="cursor-pointer"
-                    />
-                  )}
-                </div>
-              </div>
-              <div className="relative ">
-                <input
-                  type={open === false ? "password" : "text"}
-                  name=""
-                  id=""
-                  className="px-1 my-4 border-b border-textColor py-4 text-sm focus:outline-none focus:border-primaryColor focus:border-b-2 focus:shadow-md w-full"
-                  placeholder="Nhập lại mật khẩu"
-                />
-                <div className="absolute top-9 right-5">
-                  {open ? (
-                    <FaRegEye
-                      onClick={togglePassword}
-                      className="cursor-pointer"
-                    />
-                  ) : (
-                    <FaRegEyeSlash
-                      onClick={togglePassword}
-                      className="cursor-pointer"
-                    />
-                  )}
-                </div>
-              </div>
+              <FormRow
+                name="username"
+                type="text"
+                placeholder="Nhập tên đăng nhập"
+                defaultValue="truongle"
+              />
+              <FormRow
+                name="password"
+                placeholder="Nhập mật khẩu"
+                type="password"
+                defaultValue="truongle"
+              />
+              <FormRow
+                name="confirmPassword"
+                placeholder="Nhập lại mật khẩu"
+                type="password"
+                defaultValue="truongle"
+              />
+              {error && <span className="text-redDanger">{error.msg}</span>}
             </div>
             <div className="mt-4 flex gap-2 text-sm">
               <p>Bạn đã tài khoản?</p>
-              <a
-                href="/Login"
+              <Link
+                to="/login"
                 className="text-primaryColor text-sm active:scale-[.98]"
               >
                 Đăng nhập ngay
-              </a>
+              </Link>
             </div>
             <div className="text-center flex flex-col text-sm w-1/2 justify-center mx-32">
-              <button className="mt-4 py-4 px-20 bg-primaryColor rounded-3xl text-bgColor active:scale-[.98] shadow-md">
-                Đăng ký
+              <button
+                className="mt-4 py-4 px-20 bg-primaryColor rounded-3xl text-bgColor active:scale-[.98] shadow-md"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? 'Đang tải...' : 'Đăng ký'}
               </button>
               <p className="mt-4">Hoặc đăng ký với</p>
               <div className="mt-4 flex flex- rowmt-4 py-4 border-2 border-primaryColor rounded-3xl text-primaryColor hover:bg-primaryColor hover:text-bgColor active:scale-[.98] shadow-md justify-center gap-1">
@@ -101,7 +102,7 @@ const Register = () => {
               </div>
             </div>
           </div>
-        </div>
+        </Form>
       </div>
     </div>
   );

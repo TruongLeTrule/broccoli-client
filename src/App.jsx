@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  createBrowserRouter,
-  Route,
-  RouterProvider,
-  Routes,
-} from "react-router-dom";
-
-import HomeLayout from "./layouts/HomeLayout";
-
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import {
   Error,
   Landing,
@@ -15,26 +7,34 @@ import {
   Register,
   Meal,
   Planner,
+  Admin,
   CreateMeal,
   CreateIngredient,
   UpdateMeal,
   UpdateIngredient,
+  MealDetail,
+  OneDayPlan,
+  NutritionTargets,
+  FoodExclusions,
+  PrimaryDiet,
+  LikedFoods,
+  BlockedFoods,
+  SavedMeals,
+  PhysicalStats,
 } from "./pages";
-import MealDetail from "./pages/mealdetail";
-import OneDayPlan from "./pages/oneDayPlan";
-import NutritionTargets from "./pages/nutritionTargets";
-import FoodExclusions from "./pages/foodExclusions";
-import PrimaryDiet from "./pages/primaryDiet";
-import PhysicalStats from "./pages/physicalStats";
-import LikedFoods from "./pages/likedFoods";
-import BlockedFoods from "./pages/blockedFoods";
-import SavedMeals from "./pages/savedMeals";
+import { action as registerAction } from "./pages/Register";
+import { action as loginAction } from "./pages/Login";
+import { AdminLayout, HomeLayout, UserLayout } from "./layouts";
+import { adminLoader } from "./layouts/AdminLayout";
+import { userLoader } from "./layouts/UserLayout";
+import { homeLayoutLoader } from "./layouts/HomeLayout";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <HomeLayout />,
     errorElement: <Error />,
+    loader: homeLayoutLoader,
     children: [
       {
         index: true,
@@ -43,27 +43,40 @@ const router = createBrowserRouter([
       {
         path: "login",
         element: <Login />,
+        action: loginAction,
       },
       {
         path: "register",
         element: <Register />,
+        action: registerAction,
       },
       {
         path: "meal",
         element: <Meal />,
+        children: [
+          {
+            path: "/mealDetail/:id",
+            element: <MealDetail />,
+          },
+        ],
       },
       {
         path: "planner",
         element: <Planner />,
+        children: [
+          {
+            path: "onedayplan",
+            element: <OneDayPlan />,
+          },
+        ],
       },
-      {
-        path: "mealDetail",
-        element: <MealDetail />,
-      },
-      {
-        path: "onedayplan",
-        element: <OneDayPlan />,
-      },
+    ],
+  },
+  {
+    path: "user",
+    element: <UserLayout />,
+    loader: userLoader,
+    children: [
       {
         path: "nutritionTargets",
         element: <NutritionTargets />,
@@ -95,13 +108,19 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "populate",
+    path: "admin",
+    element: <AdminLayout />,
+    loader: adminLoader,
     children: [
+      {
+        index: true,
+        element: <Admin />,
+      },
       {
         path: "meal",
         children: [
           {
-            index: true,
+            path: "create",
             element: <CreateMeal />,
           },
           {
@@ -114,7 +133,7 @@ const router = createBrowserRouter([
         path: "ingredient",
         children: [
           {
-            index: true,
+            path: "create",
             element: <CreateIngredient />,
           },
           {

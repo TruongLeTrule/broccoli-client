@@ -15,6 +15,7 @@ export default {
       thirdColor: "#007336",
       fourthColor: "#E6FFDD",
       btnColor: "#FFB534",
+      redDanger: "#ef4444",
       lineColor: "#D9D9D9",
     },
   },

@@ -2,6 +2,7 @@
 import FoodRecipe from "../components/foodRecipe";
 import CaloriesChart from "../components/caloriesChart";
 import CaloriesDetails from "../components/caloriesDetails";
+import { useParams } from "react-router-dom";
 
 const MealDetail = () => {
   return (
