@@ -142,7 +142,7 @@ const NutritionTargets = () => {
               </div>
             </div>
             <div className="flex flex-col justify-between pt-5 gap-5">
-              <p className="text-xl font-semibold text-primaryColor">
+              {/* <p className="text-xl font-semibold text-primaryColor">
                 Chất dinh dưỡng vi lượng:
               </p>
               <div className="flex flex-row justify-between items-center">
@@ -178,7 +178,7 @@ const NutritionTargets = () => {
                   </p>
                   <p>g</p>
                 </div>
-              </div>
+              </div> */}
               <div className="mt-20 flex flex-row gap-10 justify-end">
                 <button className="px-10 py-2 border border-primaryColor rounded-lg hover:bg-primaryColor hover:text-bgColor">
                   Hủy

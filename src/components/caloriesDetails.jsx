@@ -1,5 +1,8 @@
-﻿import React from "react";
+﻿import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
+const baseUrl = "http://localhost:3000/api/v1/meals";
 const data = [
   {
     name: "Carbs",
@@ -40,6 +43,50 @@ const calories = {
 };
 
 const CaloriesDetails = () => {
+  const [meal, setMeal] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    const pathSegments = location.pathname.split("/");
+    const id = pathSegments[pathSegments.length - 1];
+
+    console.log("mealId from URL:", id);
+
+    if (!id || id === "meals") {
+      setError(new Error("No mealId provided in the URL"));
+      setLoading(false);
+      return;
+    }
+
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${baseUrl}/${id}`);
+        setMeal(response.data.meal);
+        console.log(response.data.meal);
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [location.pathname]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  if (!meal) {
+    return <div>No meal data available</div>;
+  }
   return (
     <div className="">
       <div className="content-center">
