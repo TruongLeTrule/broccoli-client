@@ -134,7 +134,7 @@ const UpdateMeal = () => {
       <h1 className="text-2xl font-bold">Edit meal</h1>
       <p className="text-xl font-bold">
         or{' '}
-        <Link className="underline text-primaryColor" to="../">
+        <Link className="underline text-primaryColor" to="../create-meal">
           create new meal
         </Link>
       </p>
@@ -158,7 +158,7 @@ const UpdateMeal = () => {
               setListVisible={setMealListVisible}
               renderList={mealFilteredList}
               onItemClick={handleMealClick}
-              createItemDir="../"
+              createItemDir="../create-ingredient"
             />
           )}
         </div>
@@ -196,7 +196,7 @@ const UpdateMeal = () => {
                 setListVisible={setIngredientListVisible}
                 renderList={ingredientFilteredList}
                 onItemClick={handleIngredientClick}
-                createItemDir="../../ingredient"
+                createItemDir="../create-ingredient"
                 openInOtherTab
               />
             )}
