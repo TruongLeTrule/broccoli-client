@@ -128,12 +128,12 @@ const FoodRecipe = () => {
               ))}
             </ul>
           </div>
-          <div className="px-5 py-5 bg-bgColor rounded-2xl border border-primaryColor">
+          {/* <div className="px-5 py-5 bg-bgColor rounded-2xl border border-primaryColor">
             <p className="font-dancing text-2xl text-btnColor pb-2">
               Chế biến:
             </p>
             <p>{meal.mealType}</p>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

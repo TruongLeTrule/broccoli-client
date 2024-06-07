@@ -21,7 +21,7 @@ export const action = async ({ request }) => {
   try {
     await login({ username, password });
     toast.success("Đăng nhập thành công");
-    return redirect("/user/nutritionTargets");
+    return redirect("/user");
   } catch (err) {
     error.msg = err?.response?.data?.msg;
     return error;

@@ -1,6 +1,5 @@
 import { Outlet } from "react-router-dom";
 import MealList from "../components/mealList";
-import { IoIosSearch } from "react-icons/io";
 
 const Meal = () => {
   return (

@@ -1,21 +1,23 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { getAllIngredients } from '../../apis/ingredient';
-import { updateMeal, getMealSpecific, getAllMeals } from '../../apis/meal';
-import { useDebounce } from 'use-debounce';
-import removeAccent from '../../utils/removeAccent';
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { getAllIngredients } from "../../apis/ingredient";
+import { updateMeal, getMealSpecific, getAllMeals } from "../../apis/meal";
+import { useDebounce } from "use-debounce";
+import removeAccent from "../../utils/removeAccent";
 import {
   InputDropDown,
   CustomAlert,
   FetchedList,
   SubmitBtn,
   SelectedIngredients,
-} from '../../components/populate';
+} from "../../components/populate";
+import Select from "react-select";
+import { mealTimeOptions } from "../../utils/constants";
 
 const UpdateMeal = () => {
   const [meal, setMeal] = useState({
-    mealName: '',
-    mealType: 'food',
+    mealName: "",
+    mealType: "food",
   });
   const [ingredientListVisible, setIngredientListVisible] = useState(false);
   const [mealListVisible, setMealListVisible] = useState(false);
@@ -25,18 +27,19 @@ const UpdateMeal = () => {
   const [ingredientFilteredList, setIngredientFilteredList] = useState([]);
   const [selectedIngredientList, setSelectedIngredientList] = useState([]);
   const [successAlertShow, setSuccessAlertShow] = useState(false);
-  const [successAlertMsg, setSuccessAlertMsg] = useState('');
+  const [successAlertMsg, setSuccessAlertMsg] = useState("");
   const [currentIngredient, setCurrentIngredient] = useState({
     ingredientId: 0,
-    ingredientName: '',
+    ingredientName: "",
     ingredientValue: 0,
-    ingredientUnit: 'g',
+    ingredientUnit: "g",
   });
   const [debounceInputIngredient] = useDebounce(
     currentIngredient.ingredientName,
     500
   );
   const [debounceInputMeal] = useDebounce(meal.mealName, 500);
+  const [mealTimes, setMealTimes] = useState(mealTimeOptions);
 
   const handleAddBtnClick = () => {
     const { ingredientId, ingredientValue } = currentIngredient;
@@ -44,9 +47,9 @@ const UpdateMeal = () => {
     setSelectedIngredientList([...selectedIngredientList, currentIngredient]);
     setCurrentIngredient({
       ingredientId: 0,
-      ingredientName: '',
+      ingredientName: "",
       ingredientValue: 0,
-      ingredientUnit: 'g',
+      ingredientUnit: "g",
     });
   };
 
@@ -80,11 +83,12 @@ const UpdateMeal = () => {
   };
 
   const handleUpdateBtnClick = async () => {
-    const response = await updateMeal(meal, selectedIngredientList);
+    const response = await updateMeal(meal, selectedIngredientList, mealTimes);
     setMeal({
-      mealName: '',
-      mealType: 'food',
+      mealName: "",
+      mealType: "food",
     });
+    setMealTimes(mealTimeOptions);
     setSelectedIngredientList([]);
     setSuccessAlertMsg(response.data.msg);
     setSuccessAlertShow(true);
@@ -102,18 +106,12 @@ const UpdateMeal = () => {
   const handleMealClick = async ({ mealName, mealId, mealType }) => {
     setMeal({ mealName, mealId, mealType });
     const { meal } = await getMealSpecific(mealId);
+    setMealTimes(
+      mealTimeOptions.filter(({ value }) => meal.mealTimes.includes(value))
+    );
     setSelectedIngredientList(meal.ingredients);
     setMealListVisible(false);
   };
-
-  useEffect(() => {
-    const filteredList = fetchedIngredientList.filter(({ ingredientName }) =>
-      removeAccent(ingredientName)
-        .toLowerCase()
-        .includes(removeAccent(debounceInputIngredient).toLowerCase())
-    );
-    setIngredientFilteredList(filteredList);
-  }, [debounceInputIngredient]);
 
   useEffect(() => {
     const filteredList = fetchedMealList.filter(({ mealName }) =>
@@ -133,8 +131,8 @@ const UpdateMeal = () => {
     <main className="h-screen flex items-center justify-center flex-col">
       <h1 className="text-2xl font-bold">Edit meal</h1>
       <p className="text-xl font-bold">
-        or{' '}
-        <Link className="underline text-primaryColor" to="../">
+        or{" "}
+        <Link className="underline text-primaryColor" to="../create-meal">
           create new meal
         </Link>
       </p>
@@ -158,9 +156,21 @@ const UpdateMeal = () => {
               setListVisible={setMealListVisible}
               renderList={mealFilteredList}
               onItemClick={handleMealClick}
-              createItemDir="../"
+              createItemDir="../create-ingredient"
             />
           )}
+        </div>
+        {/* Meal time */}
+        <div className="mt-4">
+          <label className="block font-semibold mb-2">
+            Available meal time
+          </label>
+          <Select
+            isMulti
+            options={mealTimeOptions}
+            value={mealTimes}
+            onChange={(data) => setMealTimes(data)}
+          />
         </div>
         {/* Ingredient */}
         <div className="mt-4 w-80">
@@ -196,7 +206,7 @@ const UpdateMeal = () => {
                 setListVisible={setIngredientListVisible}
                 renderList={ingredientFilteredList}
                 onItemClick={handleIngredientClick}
-                createItemDir="../../ingredient"
+                createItemDir="../create-ingredient"
                 openInOtherTab
               />
             )}
