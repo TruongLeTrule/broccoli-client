@@ -61,7 +61,7 @@ const CreateIngredient = () => {
       <h1 className="text-2xl font-bold">Create new ingredient</h1>
       <p className="text-xl font-bold">
         or{' '}
-        <Link className="underline text-primaryColor" to="update">
+        <Link className="underline text-primaryColor" to="../update-ingredient">
           edit ingredient
         </Link>
       </p>

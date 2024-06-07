@@ -21,6 +21,7 @@ import {
   BlockedFoods,
   SavedMeals,
   PhysicalStats,
+  User,
 } from './pages';
 import { action as registerAction } from './pages/Register';
 import { action as loginAction } from './pages/Login';
@@ -68,40 +69,44 @@ const router = createBrowserRouter([
           },
         ],
       },
-    ],
-  },
-  {
-    path: 'user',
-    element: <UserLayout />,
-    loader: userLoader,
-    children: [
       {
-        path: 'nutritionTargets',
-        element: <NutritionTargets />,
-      },
-      {
-        path: 'foodExclusions',
-        element: <FoodExclusions />,
-      },
-      {
-        path: 'primaryDiet',
-        element: <PrimaryDiet />,
-      },
-      {
-        path: 'likedFoods',
-        element: <LikedFoods />,
-      },
-      {
-        path: 'blockedFoods',
-        element: <BlockedFoods />,
-      },
-      {
-        path: 'savedMeals',
-        element: <SavedMeals />,
-      },
-      {
-        path: 'physicalStats',
-        element: <PhysicalStats />,
+        path: 'user',
+        element: <UserLayout />,
+        loader: userLoader,
+        children: [
+          {
+            index: true,
+            element: <User />,
+          },
+          {
+            path: 'nutritionTargets',
+            element: <NutritionTargets />,
+          },
+          {
+            path: 'foodExclusions',
+            element: <FoodExclusions />,
+          },
+          {
+            path: 'primaryDiet',
+            element: <PrimaryDiet />,
+          },
+          {
+            path: 'likedFoods',
+            element: <LikedFoods />,
+          },
+          {
+            path: 'blockedFoods',
+            element: <BlockedFoods />,
+          },
+          {
+            path: 'savedMeals',
+            element: <SavedMeals />,
+          },
+          {
+            path: 'physicalStats',
+            element: <PhysicalStats />,
+          },
+        ],
       },
     ],
   },
@@ -115,30 +120,20 @@ const router = createBrowserRouter([
         element: <Admin />,
       },
       {
-        path: 'meal',
-        children: [
-          {
-            path: 'create',
-            element: <CreateMeal />,
-          },
-          {
-            path: 'update',
-            element: <UpdateMeal />,
-          },
-        ],
+        path: 'create-meal',
+        element: <CreateMeal />,
       },
       {
-        path: 'ingredient',
-        children: [
-          {
-            path: 'create',
-            element: <CreateIngredient />,
-          },
-          {
-            path: 'update',
-            element: <UpdateIngredient />,
-          },
-        ],
+        path: 'update-meal',
+        element: <UpdateMeal />,
+      },
+      {
+        path: 'create-ingredient',
+        element: <CreateIngredient />,
+      },
+      {
+        path: 'update-ingredient',
+        element: <UpdateIngredient />,
       },
     ],
   },

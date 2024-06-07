@@ -1,4 +1,4 @@
-export const cleanCreateMealBody = (meal, ingredients) => {
+export const cleanCreateMealBody = (meal, ingredients, mealTimes) => {
   const { mealName, mealType } = meal;
   return {
     mealName,
@@ -10,6 +10,7 @@ export const cleanCreateMealBody = (meal, ingredients) => {
         ingredientUnit,
       })
     ),
+    mealTimes: mealTimes.map(({ value }) => value),
   };
 };
 

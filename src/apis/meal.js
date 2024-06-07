@@ -1,14 +1,17 @@
 import customAxios from '../utils/customAxios';
 import { cleanCreateMealBody } from '../utils/cleanRequestBody';
 
-export const createMeal = (meal, ingredients) =>
+export const createMeal = (meal, ingredients, mealTimes) =>
   customAxios
-    .post('meals', cleanCreateMealBody(meal, ingredients))
+    .post('meals', cleanCreateMealBody(meal, ingredients, mealTimes))
     .then((response) => response);
 
-export const updateMeal = (meal, ingredients) =>
+export const updateMeal = (meal, ingredients, mealTimes) =>
   customAxios
-    .patch(`meals/${meal.mealId}`, cleanCreateMealBody(meal, ingredients))
+    .patch(
+      `meals/${meal.mealId}`,
+      cleanCreateMealBody(meal, ingredients, mealTimes)
+    )
     .then((response) => response);
 
 export const getMealSpecific = (id) =>
