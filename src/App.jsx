@@ -62,12 +62,10 @@ const router = createBrowserRouter([
       {
         path: 'planner',
         element: <Planner />,
-        children: [
-          {
-            path: 'onedayplan',
-            element: <OneDayPlan />,
-          },
-        ],
+      },
+      {
+        path: 'planner/onedayplan',
+        element: <OneDayPlan />,
       },
       {
         path: 'user',

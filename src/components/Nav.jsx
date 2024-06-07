@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import React from 'react';
 import { HiOutlineMenu } from 'react-icons/hi';
 import { FaXmark } from 'react-icons/fa6';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { defaultNavItems, loggedInNavItems } from '../utils/renderArr';
 import useAuthStore from '../states/authState';
 
@@ -45,12 +45,12 @@ const Nav = () => {
         }`}
       >
         <div className="flex items-baseline justify-between ">
-          <a
-            href=""
+          <Link
+            to="/"
             className="font-dancing font-semibold text-6xl md:px-20 pt-10 pb-2"
           >
             Broccoli
-          </a>
+          </Link>
           <ul className="md:flex space-x-12 hidden px-20">
             {navItems.map(({ name, path }) => (
               <li key={name} className="">
