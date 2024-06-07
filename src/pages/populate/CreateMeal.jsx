@@ -11,6 +11,8 @@ import {
   SubmitBtn,
   SelectedIngredients,
 } from '../../components/populate';
+import Select from 'react-select';
+import { mealTimeOptions } from '../../utils/constants';
 
 const CreateMeal = () => {
   const [meal, setMeal] = useState({
@@ -33,6 +35,7 @@ const CreateMeal = () => {
     currentIngredient.ingredientName,
     500
   );
+  const [mealTimes, setMealTimes] = useState(mealTimeOptions);
 
   const handleAddBtnClick = () => {
     const { ingredientId, ingredientValue } = currentIngredient;
@@ -76,11 +79,12 @@ const CreateMeal = () => {
   };
 
   const handleCreateBtnClick = async () => {
-    const response = await createMeal(meal, selectedIngredientList);
+    const response = await createMeal(meal, selectedIngredientList, mealTimes);
     setMeal({
       mealName: '',
       mealType: 'food',
     });
+    setMealTimes(mealTimeOptions);
     setSelectedIngredientList([]);
     setSuccessAlertMsg(response.data.msg);
     setSuccessAlertShow(true);
@@ -122,6 +126,18 @@ const CreateMeal = () => {
           textInputName="mealName"
           selectName="mealType"
         />
+        {/* Meal time */}
+        <div className="mt-4">
+          <label className="block font-semibold mb-2">
+            Available meal time
+          </label>
+          <Select
+            isMulti
+            options={mealTimeOptions}
+            value={mealTimes}
+            onChange={(data) => setMealTimes(data)}
+          />
+        </div>
         {/* Ingredient */}
         <div className="mt-4 w-80">
           <label className="block font-semibold mb-2">Ingredient</label>

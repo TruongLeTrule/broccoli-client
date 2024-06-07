@@ -11,6 +11,8 @@ import {
   SubmitBtn,
   SelectedIngredients,
 } from '../../components/populate';
+import Select from 'react-select';
+import { mealTimeOptions } from '../../utils/constants';
 
 const UpdateMeal = () => {
   const [meal, setMeal] = useState({
@@ -37,6 +39,7 @@ const UpdateMeal = () => {
     500
   );
   const [debounceInputMeal] = useDebounce(meal.mealName, 500);
+  const [mealTimes, setMealTimes] = useState(mealTimeOptions);
 
   const handleAddBtnClick = () => {
     const { ingredientId, ingredientValue } = currentIngredient;
@@ -80,11 +83,12 @@ const UpdateMeal = () => {
   };
 
   const handleUpdateBtnClick = async () => {
-    const response = await updateMeal(meal, selectedIngredientList);
+    const response = await updateMeal(meal, selectedIngredientList, mealTimes);
     setMeal({
       mealName: '',
       mealType: 'food',
     });
+    setMealTimes(mealTimeOptions);
     setSelectedIngredientList([]);
     setSuccessAlertMsg(response.data.msg);
     setSuccessAlertShow(true);
@@ -102,6 +106,9 @@ const UpdateMeal = () => {
   const handleMealClick = async ({ mealName, mealId, mealType }) => {
     setMeal({ mealName, mealId, mealType });
     const { meal } = await getMealSpecific(mealId);
+    setMealTimes(
+      mealTimeOptions.filter(({ value }) => meal.mealTimes.includes(value))
+    );
     setSelectedIngredientList(meal.ingredients);
     setMealListVisible(false);
   };
@@ -161,6 +168,18 @@ const UpdateMeal = () => {
               createItemDir="../create-ingredient"
             />
           )}
+        </div>
+        {/* Meal time */}
+        <div className="mt-4">
+          <label className="block font-semibold mb-2">
+            Available meal time
+          </label>
+          <Select
+            isMulti
+            options={mealTimeOptions}
+            value={mealTimes}
+            onChange={(data) => setMealTimes(data)}
+          />
         </div>
         {/* Ingredient */}
         <div className="mt-4 w-80">
