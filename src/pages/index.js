@@ -25,5 +25,4 @@ export { default as LikedFoods } from "./likedFoods";
 export { default as BlockedFoods } from "./blockedFoods";
 export { default as SavedMeals } from "./savedMeals";
 export { default as PhysicalStats } from "./physicalStats";
-
 export { default as User } from "./User";

@@ -1,23 +1,9 @@
 ﻿import React from "react";
+import PropTypes from "prop-types";
 import { ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 
-const data = [
-  {
-    name: "Carbs",
-    value: 100,
-  },
-  {
-    name: "Protein",
-    value: 200,
-  },
-  {
-    name: "Fats",
-    value: 150,
-  },
-];
-
 const RADIAN = Math.PI / 180;
-const COLORS = ["#FFB534", "#00c722", "#007336"];
+const COLORS = ["#00c722", "#FFB534", "#007336"];
 
 const renderCustomizedLabel = ({
   cx,
@@ -44,7 +30,10 @@ const renderCustomizedLabel = ({
   );
 };
 
-const CaloriesChart = () => {
+const CaloriesChart = ({ data }) => {
+  if (!Array.isArray(data)) {
+    return <div>No data available</div>;
+  }
   return (
     <div className="w-64">
       <ResponsiveContainer width="100%" height="100%">
@@ -67,6 +56,15 @@ const CaloriesChart = () => {
       </ResponsiveContainer>
     </div>
   );
+};
+
+CaloriesChart.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      value: PropTypes.number.isRequired,
+    })
+  ).isRequired,
 };
 
 export default CaloriesChart;

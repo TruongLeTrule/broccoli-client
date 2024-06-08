@@ -1,10 +1,10 @@
-import { useEffect, useMemo, useState } from 'react';
-import React from 'react';
-import { HiOutlineMenu } from 'react-icons/hi';
-import { FaXmark } from 'react-icons/fa6';
-import { NavLink, Link } from 'react-router-dom';
-import { defaultNavItems, loggedInNavItems } from '../utils/renderArr';
-import useAuthStore from '../states/authState';
+import { useEffect, useMemo, useState } from "react";
+import React from "react";
+import { HiOutlineMenu } from "react-icons/hi";
+import { FaXmark } from "react-icons/fa6";
+import { NavLink } from "react-router-dom";
+import { defaultNavItems, loggedInNavItems } from "../utils/renderArr";
+import useAuthStore from "../states/authState";
 
 const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -24,10 +24,10 @@ const Nav = () => {
         setIsSticky(false);
       }
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   });
 
@@ -40,8 +40,8 @@ const Nav = () => {
       <nav
         className={`lg:px-14 px-4 ${
           isSticky
-            ? 'sticky top-0 left-0 right-0 bg-white duration-300 shadow-md'
-            : ''
+            ? "sticky top-0 left-0 right-0 bg-white duration-300 shadow-md"
+            : ""
         }`}
       >
         <div className="flex items-baseline justify-between ">
@@ -58,8 +58,8 @@ const Nav = () => {
                   to={path}
                   className={({ isActive }) => {
                     return !isActive
-                      ? 'border-none py-2 px-2 text-textColor hover:text-primaryColor '
-                      : 'border-b-4 py-2 px-2 text-primaryColor';
+                      ? "border-none py-2 px-2 text-textColor hover:text-primaryColor "
+                      : "border-b-4 py-2 px-2 text-primaryColor border-primaryColor";
                   }}
                 >
                   {name}
@@ -82,7 +82,7 @@ const Nav = () => {
         </div>
         <div
           className={`space-y-4 px-4 py-4 mt-32 border-2 border-primaryColor bg-bgColor rounded-md ${
-            isMenuOpen ? 'block fixed top-0 left-0 right-0' : 'hidden'
+            isMenuOpen ? "block fixed top-0 left-0 right-0" : "hidden"
           }`}
         >
           {navItems.map(({ name, path }) => (

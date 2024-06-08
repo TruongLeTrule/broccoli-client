@@ -28,10 +28,10 @@ const MealListImg = [
     img: <img src="src\assets\mealList\7-bun-bo-hue.jpg" alt="" />,
   },
   {
-    img: <img src="src\assets\mealList\8-ca-kho-to.jpg" alt="" />,
+    img: <img src="src\assets\mealList\\8-ca-kho-to.jpg" alt="" />,
   },
   {
-    img: <img src="src\assets\mealList\9-bo-nuong-la-lot.jpg" alt="" />,
+    img: <img src="src\assets\mealList\\9-bo-nuong-la-lot.jpg" alt="" />,
   },
   {
     img: <img src="src\assets\mealList\10-bun-rieu.jpg" alt="" />,

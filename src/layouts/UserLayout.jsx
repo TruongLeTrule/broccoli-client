@@ -14,6 +14,16 @@ export const userLoader = async () => {
 };
 
 const UserLayout = () => {
+  const navigate = useNavigate();
+  const { removeUser } = useAuthStore((state) => state);
+
+  const logUserOut = async () => {
+    removeUser();
+    await logOut();
+    navigate("/");
+    toast.success("Đăng xuất thành công");
+  };
+
   return (
     <>
       <Outlet />

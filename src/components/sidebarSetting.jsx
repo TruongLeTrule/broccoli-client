@@ -39,11 +39,11 @@ const SidebarSetting = () => {
         <li key={name} className="py-3 list-none">
           <NavLink
             to={path}
-            className={({ isActive }) =>
-              `${
-                isActive ? "font-semibold text-primaryColor" : "text-textColor"
-              } py-2 px-2 hover:text-primaryColor`
-            }
+            className={({ isActive }) => {
+              return !isActive
+                ? "border-none py-2 px-2 text-textColor hover:text-primaryColor"
+                : "border-none py-2 px-2 text-primaryColor font-semibold";
+            }}
           >
             {name}
           </NavLink>

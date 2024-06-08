@@ -3,18 +3,21 @@
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#00c722", // Set your primary color here
+      main: "#00c722",
     },
     secondary: {
-      main: "#00c722", // Set your secondary color here
+      main: "#FFB534",
+    },
+    third: {
+      main: "#007336",
     },
     text: {
-      primary: "#00c722", // Customize primary text color
+      primary: "#00c722",
     },
   },
   typography: {
     h6: {
-      color: "#007bff", // Customize specific typography styles
+      color: "#007bff",
     },
   },
 });
