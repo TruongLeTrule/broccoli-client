@@ -5,6 +5,7 @@ import { FaCheckCircle } from 'react-icons/fa';
 import useMealPlanStore from '../states/mealPlanState';
 import { mealImgs, mealTimes } from '../utils/renderArr';
 import { updateOneMealAPI } from '../apis/mealPlan';
+import { Link } from 'react-router-dom';
 
 const SessionsPlan = () => {
   const { chosenMeals, setChosenMeals, setNutrients, appliedDate } =
@@ -69,9 +70,10 @@ const SessionsPlan = () => {
             {meals.map(
               ({ mealId, mealName, mealTime, imgUrl, quantity }, index) =>
                 key === mealTime && (
-                  <div
+                  <Link
+                    to={`/meal/${mealId}`}
                     key={mealId}
-                    className="mt-4 flex flex-row items-center justify-between"
+                    className="mt-4 flex flex-row items-center justify-between hover:drop-shadow-lg hover:bg-slate-50 p-4 rounded-md"
                   >
                     <div className="flex flex-row items-center gap-x-6">
                       <div className="flex flex-row ">
@@ -109,7 +111,7 @@ const SessionsPlan = () => {
                     <div>
                       <BsThreeDots className="cursor-pointer text-primaryColor " />
                     </div>
-                  </div>
+                  </Link>
                 )
             )}
           </div>

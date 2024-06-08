@@ -1,28 +1,27 @@
-﻿import React from "react";
-import { ThemeProvider } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Slider from "@mui/material/Slider";
-import SidebarSetting from "../components/sidebarSetting";
-import CaloriesChart from "../components/caloriesChart";
-import theme from "../components/theme";
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { styled } from "@mui/material/styles";
-import MuiInput from "@mui/material/Input";
-import { toast } from "react-toastify";
-
-const userUrl = "http://localhost:3000/api/v1/user/target";
+﻿import React from 'react';
+import { ThemeProvider } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Slider from '@mui/material/Slider';
+import SidebarSetting from '../components/sidebarSetting';
+import CaloriesChart from '../components/caloriesChart';
+import theme from '../components/theme';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { styled } from '@mui/material/styles';
+import MuiInput from '@mui/material/Input';
+import { toast } from 'react-toastify';
+import { getUserTarget, updateUserTarget } from '../apis/user';
 
 const MAX = 500;
 const MAXFat = 200;
 
 const Input = styled(MuiInput)`
   width: 45px;
-  font-family: "poppins";
+  font-family: 'poppins';
   border: 0;
-  color: "#000000";
+  color: '#000000';
   & .MuiInput-input {
-    color: "#000000";
+    color: '#000000';
   }
 `;
 
@@ -36,45 +35,39 @@ const NutritionTargets = () => {
   const [proteinValue, setProteinValue] = useState();
   const [fatValue, setFatValue] = useState();
 
+  const fetchUser = async () => {
+    const { nutrients } = await getUserTarget();
+
+    setNutrients(nutrients);
+    setCaloriesValue(nutrients[0].targetNutrientValue);
+    setCarbValue(nutrients[3].targetNutrientValue);
+    setProteinValue(nutrients[1].targetNutrientValue);
+    setFatValue(nutrients[2].targetNutrientValue);
+    console.log(nutrients);
+    setLoading(false);
+  };
+
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await axios.get(userUrl, {
-          withCredentials: true,
-        });
-        setNutrients(response.data.nutrients);
-        setCaloriesValue(response.data.nutrients[0].targetNutrientValue);
-        setCarbValue(response.data.nutrients[3].targetNutrientValue);
-        setProteinValue(response.data.nutrients[1].targetNutrientValue);
-        setFatValue(response.data.nutrients[2].targetNutrientValue);
-        console.log(response.data.nutrients);
-      } catch (error) {
-        setError(error.message);
-        setLoading(false);
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchUser();
   }, []);
 
   const data = [
     {
-      name: "Carbs",
+      name: 'Carbs',
       value:
         nutrients && nutrients.length > 3
           ? nutrients[3].targetNutrientValue
           : 0,
     },
     {
-      name: "Protein",
+      name: 'Protein',
       value:
         nutrients && nutrients.length > 1
           ? nutrients[1].targetNutrientValue
           : 0,
     },
     {
-      name: "Fats",
+      name: 'Fats',
       value:
         nutrients && nutrients.length > 2
           ? nutrients[2].targetNutrientValue
@@ -95,59 +88,59 @@ const NutritionTargets = () => {
   };
 
   const handleInputCarbChange = (event) => {
-    setCarbValue(event.target.value === "" ? 0 : Number(event.target.value));
+    setCarbValue(event.target.value === '' ? 0 : Number(event.target.value));
   };
 
   const handleInputProChange = (event) => {
-    setProteinValue(event.target.value === "" ? 0 : Number(event.target.value));
+    setProteinValue(event.target.value === '' ? 0 : Number(event.target.value));
   };
 
   const handleInputFatChange = (event) => {
-    setFatValue(event.target.value === "" ? 0 : Number(event.target.value));
+    setFatValue(event.target.value === '' ? 0 : Number(event.target.value));
   };
 
   const PrettoSlider = styled(Slider)({
     height: 8,
-    "& .MuiSlider-track": {
-      border: "none",
+    '& .MuiSlider-track': {
+      border: 'none',
     },
-    "& .MuiSlider-thumb": {
+    '& .MuiSlider-thumb': {
       height: 24,
       width: 24,
-      backgroundColor: "#fff",
-      border: "2px solid currentColor",
-      "&:focus, &:hover, &.Mui-active, &.Mui-focusVisible": {
-        boxShadow: "inherit",
+      backgroundColor: '#fff',
+      border: '2px solid currentColor',
+      '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
+        boxShadow: 'inherit',
       },
-      "&::before": {
-        display: "none",
+      '&::before': {
+        display: 'none',
       },
     },
-    "& .MuiSlider-valueLabel": {
+    '& .MuiSlider-valueLabel': {
       lineHeight: 1.2,
       fontSize: 12,
-      background: "unset",
+      background: 'unset',
       padding: 0,
       width: 32,
       height: 32,
-      borderRadius: "50% 50% 50% 0",
-      transformOrigin: "bottom left",
-      transform: "translate(50%, -100%) rotate(-45deg) scale(0)",
-      "&::before": { display: "none" },
-      "&.MuiSlider-valueLabelOpen": {
-        transform: "translate(50%, -100%) rotate(-45deg) scale(1)",
+      borderRadius: '50% 50% 50% 0',
+      transformOrigin: 'bottom left',
+      transform: 'translate(50%, -100%) rotate(-45deg) scale(0)',
+      '&::before': { display: 'none' },
+      '&.MuiSlider-valueLabelOpen': {
+        transform: 'translate(50%, -100%) rotate(-45deg) scale(1)',
       },
-      "& > *": {
-        transform: "rotate(45deg)",
+      '& > *': {
+        transform: 'rotate(45deg)',
       },
     },
   });
 
-  const handleSave = () => {
-    const calories = parseFloat(document.getElementById("calories").value);
-    const carb = parseFloat(document.getElementById("carb").value);
-    const protein = parseFloat(document.getElementById("protein").value);
-    const fat = parseFloat(document.getElementById("fat").value);
+  const handleSave = async () => {
+    const calories = parseFloat(document.getElementById('calories').value);
+    const carb = parseFloat(document.getElementById('carb').value);
+    const protein = parseFloat(document.getElementById('protein').value);
+    const fat = parseFloat(document.getElementById('fat').value);
     console.log({ calories, carb, protein, fat });
     const nutrients = [
       {
@@ -167,25 +160,10 @@ const NutritionTargets = () => {
         targetNutrientValue: carb,
       },
     ];
-    const data = { nutrients };
-    axios
-      .patch(userUrl, data, { withCredentials: true })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.error(error);
-        if (error.response) {
-          console.error("Response data:", error.response.data);
-          console.error("Response status:", error.response.status);
-          console.error("Response headers:", error.response.headers);
-        } else if (error.request) {
-          console.error("Request data:", error.request);
-        } else {
-          console.error("Error message:", error.message);
-        }
-      });
-    toast.success("Lưu thành công");
+    console.log(nutrients);
+    const updatedNutrients = await updateUserTarget({ nutrients });
+    console.log(updatedNutrients);
+    toast.success('Lưu thành công');
   };
 
   const handleCancel = () => {
@@ -246,7 +224,7 @@ const NutritionTargets = () => {
                         aria-labelledby="input-slider"
                         color="primary"
                         max={MAX}
-                        value={typeof carbValue === "number" ? carbValue : 0}
+                        value={typeof carbValue === 'number' ? carbValue : 0}
                         onChange={handleCarbChange}
                       />
                       <p className="px-5 py-2 border border-primaryColor rounded-lg">
@@ -261,8 +239,8 @@ const NutritionTargets = () => {
                             step: 10,
                             min: 0,
                             max: MAX,
-                            type: "number",
-                            "aria-labelledby": "input-slider",
+                            type: 'number',
+                            'aria-labelledby': 'input-slider',
                           }}
                         />
                       </p>
@@ -277,7 +255,7 @@ const NutritionTargets = () => {
                         color="secondary"
                         max={MAX}
                         value={
-                          typeof proteinValue === "number" ? proteinValue : 0
+                          typeof proteinValue === 'number' ? proteinValue : 0
                         }
                         onChange={handleProteinChange}
                       />
@@ -293,8 +271,8 @@ const NutritionTargets = () => {
                             step: 10,
                             min: 0,
                             max: MAX,
-                            type: "number",
-                            "aria-labelledby": "input-slider",
+                            type: 'number',
+                            'aria-labelledby': 'input-slider',
                           }}
                         />
                       </p>
@@ -308,7 +286,7 @@ const NutritionTargets = () => {
                         aria-label="pretto slider"
                         color="third"
                         max={MAXFat}
-                        value={typeof fatValue === "number" ? fatValue : 0}
+                        value={typeof fatValue === 'number' ? fatValue : 0}
                         onChange={handleFatChange}
                       />
                       <p className="px-5 py-2 border border-primaryColor rounded-lg">
@@ -323,8 +301,8 @@ const NutritionTargets = () => {
                             step: 10,
                             min: 0,
                             max: MAX,
-                            type: "number",
-                            "aria-labelledby": "input-slider",
+                            type: 'number',
+                            'aria-labelledby': 'input-slider',
                           }}
                         />
                       </p>

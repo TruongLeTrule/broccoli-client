@@ -1,37 +1,37 @@
-﻿import React from "react";
-import { FaFacebook, FaInstagram } from "react-icons/fa";
-import { PiCopyrightLight } from "react-icons/pi";
-
+﻿import React from 'react';
+import { FaFacebook, FaInstagram } from 'react-icons/fa';
+import { PiCopyrightLight } from 'react-icons/pi';
+import logo from '../assets/logo.png';
 const Footer = () => {
   const footerItems = [
     {
-      title: "Liên hệ",
+      title: 'Liên hệ',
       items: [
-        "+84 9999 9999",
-        "Broccoli@gmail.com.vn",
-        "Khu phố 6, P.Linh Trung, Tp.Thủ Đức, Tp.Hồ Chí Minh",
+        '+84 9999 9999',
+        'Broccoli@gmail.com.vn',
+        'Khu phố 6, P.Linh Trung, Tp.Thủ Đức, Tp.Hồ Chí Minh',
       ],
     },
     {
-      title: "Về chúng tôi",
+      title: 'Về chúng tôi',
       items: [
-        "Các điều khoản và điều kiện",
-        "Chính sách bảo mật",
-        "Chính sách cookie",
+        'Các điều khoản và điều kiện',
+        'Chính sách bảo mật',
+        'Chính sách cookie',
       ],
     },
   ];
 
   const socialItems = [
     {
-      title: "Facebook",
+      title: 'Facebook',
       icon: <FaFacebook />,
-      link: "https://www.facebook.com/",
+      link: 'https://www.facebook.com/',
     },
     {
-      title: "Instagram",
+      title: 'Instagram',
       icon: <FaInstagram />,
-      link: "https://www.instagram.com/",
+      link: 'https://www.instagram.com/',
     },
   ];
 
@@ -45,8 +45,8 @@ const Footer = () => {
       </div>
       <div className="max-w-[1240px] mx-auto flex flex-row">
         <img
-          src="src\assets\logo.png"
-          alt=""
+          src={logo}
+          alt="broccoli"
           className="absolute size-[20rem] left-5 max-xl:hidden"
         />
         <div className="max-w-[1000px] ml-auto grid lg:grid-cols-3 rounded-sm py-2">

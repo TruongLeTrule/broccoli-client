@@ -55,7 +55,8 @@ import img1 from '../assets/mealList/1-pho-bo-dac-biet.jpg';
 import img2 from '../assets/mealList/2-banh-mi-thit-nuong.jpg';
 import img3 from '../assets/mealList/3-bun-cha-ha-noi.jpg';
 import img4 from '../assets/mealList/4-goi-con.jpg';
-export const mealImgs = [img1, img2, img3, img4];
+import img5 from '../assets/mealList/5-com-tam.jpg';
+export const mealImgs = [img1, img2, img3, img4, img5];
 
 export const mealTimes = [
   {

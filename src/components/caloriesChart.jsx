@@ -1,9 +1,9 @@
-﻿import React from "react";
-import PropTypes from "prop-types";
-import { ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
+﻿import React from 'react';
+import PropTypes from 'prop-types';
+import { ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 
 const RADIAN = Math.PI / 180;
-const COLORS = ["#00c722", "#FFB534", "#007336"];
+const COLORS = ['#00c722', '#FFB534', '#007336'];
 
 const renderCustomizedLabel = ({
   cx,
@@ -22,7 +22,7 @@ const renderCustomizedLabel = ({
       x={x}
       y={y}
       fill="white"
-      textAnchor={x > cx ? "start" : "end"}
+      textAnchor={x > cx ? 'start' : 'end'}
       dominantBaseline="central"
     >
       {`${(percent * 100).toFixed(0)}%`}
@@ -31,15 +31,24 @@ const renderCustomizedLabel = ({
 };
 
 const CaloriesChart = ({ data }) => {
-  if (!Array.isArray(data)) {
-    return <div>No data available</div>;
-  }
+  const handleNutrients = (nutrientData) => {
+    const result = nutrientData
+      .filter(({ nutrientId }) => nutrientId !== 1 && nutrientId !== 5)
+      .map(({ nutrientName, nutrientValue }) => ({
+        name: nutrientName,
+        value: nutrientValue,
+      }));
+
+    console.log('chart============', result);
+    return result;
+  };
+
   return (
     <div className="w-64">
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
           <Pie
-            data={data}
+            data={handleNutrients(data)}
             dataKey="value"
             cx="50%"
             cy="50%"
@@ -48,7 +57,7 @@ const CaloriesChart = ({ data }) => {
             label={renderCustomizedLabel}
             fill="#00c722"
           >
-            {data.map((entry, i) => (
+            {handleNutrients(data).map((entry, i) => (
               <Cell key={`cell-${i}`} fill={COLORS[i % COLORS.length]} />
             ))}
           </Pie>

@@ -35,9 +35,9 @@ const OneDayPlan = () => {
     const { nutrients, chosenMeals } = await createMealPlanAPI(
       appliedDate.startOf('date').toISOString()
     );
-    console.log(chosenMeals, nutrients);
+    const userTarget = await getUserTarget();
 
-    setTarget(await getUserTarget());
+    setTarget(userTarget?.nutrients);
     setNutrients(nutrients);
     setChosenMeals(chosenMeals);
     setLoading(false);
@@ -127,12 +127,12 @@ const OneDayPlan = () => {
                     Tổng Calories:{' '}
                     {nutrients
                       .find(({ nutrientId }) => nutrientId === 1)
-                      .nutrientValue.toFixed(2)}{' '}
+                      .nutrientValue.toFixed(0)}{' '}
                     kCal
                   </p>
                   <p className="text-primaryColor font-medium mt-4">
                     Calories mục tiêu:{' '}
-                    {target[0]?.targetNutrientValue.toFixed(2)} kCal
+                    {target[0]?.targetNutrientValue.toFixed(0)} kCal
                   </p>
                   {/* <CaloriesDetails /> */}
                   {/* <button className="mt-10 text-primaryColor hover:text-btnColor">
