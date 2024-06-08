@@ -7,9 +7,8 @@ import { mealImgs, mealTimes } from '../utils/renderArr';
 import { updateOneMealAPI } from '../apis/mealPlan';
 
 const SessionsPlan = () => {
-  const { chosenMeals, setChosenMeals, setNutrients } = useMealPlanStore(
-    (state) => state
-  );
+  const { chosenMeals, setChosenMeals, setNutrients, appliedDate } =
+    useMealPlanStore((state) => state);
   const [meals, setMeals] = useState([]);
   const [keepMeals, setKeepMeals] = useState([]);
 
@@ -28,7 +27,8 @@ const SessionsPlan = () => {
 
     const newMealPlan = await updateOneMealAPI(
       regenerateMeals[0].mealId,
-      mealTime
+      mealTime,
+      appliedDate.startOf('date').toISOString()
     );
 
     console.log(newMealPlan);

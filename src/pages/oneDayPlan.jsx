@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from 'react';
+﻿import { useState } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import SessionsPlan from '../components/sessionsPlan';
 import CaloriesChart from '../components/planner/CaloriesChart';
@@ -16,7 +16,6 @@ import {
   updateMealPlanAPI,
 } from '../apis/mealPlan';
 import { getUserTarget } from '../apis/user';
-import dayjs from 'dayjs';
 
 const OneDayPlan = () => {
   const {
@@ -26,14 +25,15 @@ const OneDayPlan = () => {
     setNutrients,
     target,
     setTarget,
+    appliedDate,
+    setAppliedDate,
   } = useMealPlanStore((state) => state);
   const [loading, setLoading] = useState(false);
-  const [appliedDay, setAppliedDay] = useState(dayjs());
 
   const handleCreateMealPlanBtn = async () => {
     setLoading(true);
     const { nutrients, chosenMeals } = await createMealPlanAPI(
-      appliedDay.startOf('date').toISOString()
+      appliedDate.startOf('date').toISOString()
     );
     console.log(chosenMeals, nutrients);
 
@@ -45,7 +45,7 @@ const OneDayPlan = () => {
 
   const handleCalendarPick = async (newDate) => {
     setLoading(true);
-    setAppliedDay(newDate);
+    setAppliedDate(newDate);
     const { nutrients, chosenMeals } = await getMealPlanAPI(
       newDate.startOf('date').toISOString()
     );
@@ -60,7 +60,7 @@ const OneDayPlan = () => {
   const handleRegenerateBtnClick = async () => {
     setLoading(true);
     const { nutrients, chosenMeals } = await updateMealPlanAPI(
-      appliedDay.startOf('date').toISOString()
+      appliedDate.startOf('date').toISOString()
     );
     console.log(chosenMeals, nutrients);
 
@@ -80,7 +80,7 @@ const OneDayPlan = () => {
             <p className="text-primaryColor font-semibold text-2xl">Thực đơn</p>
             <div className="flex flex-row items-center gap-2 ml-2">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker value={appliedDay} onChange={handleCalendarPick} />
+                <DatePicker value={appliedDate} onChange={handleCalendarPick} />
               </LocalizationProvider>
               {/* <p className="text-primaryColor text-lg">Hôm nay</p> */}
             </div>
