@@ -64,7 +64,7 @@ const router = createBrowserRouter([
         element: <Planner />,
       },
       {
-        path: "onedayplan",
+        path: 'planner/onedayplan',
         element: <OneDayPlan />,
       },
       {

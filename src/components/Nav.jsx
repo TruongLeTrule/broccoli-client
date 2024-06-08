@@ -45,12 +45,12 @@ const Nav = () => {
         }`}
       >
         <div className="flex items-baseline justify-between ">
-          <a
-            href=""
+          <Link
+            to="/"
             className="font-dancing font-semibold text-6xl md:px-20 pt-10 pb-2"
           >
             Broccoli
-          </a>
+          </Link>
           <ul className="md:flex space-x-12 hidden px-20">
             {navItems.map(({ name, path }) => (
               <li key={name} className="">

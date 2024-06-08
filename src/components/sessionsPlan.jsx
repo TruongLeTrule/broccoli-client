@@ -1,86 +1,121 @@
-﻿import React from "react";
-import { BsThreeDots } from "react-icons/bs";
-import { LiaExchangeAltSolid } from "react-icons/lia";
-import { FaCheckCircle } from "react-icons/fa";
+﻿import React, { useEffect, useState } from 'react';
+import { BsThreeDots } from 'react-icons/bs';
+import { LiaExchangeAltSolid } from 'react-icons/lia';
+import { FaCheckCircle } from 'react-icons/fa';
+import useMealPlanStore from '../states/mealPlanState';
+import { mealImgs, mealTimes } from '../utils/renderArr';
+import { updateOneMealAPI } from '../apis/mealPlan';
 
 const SessionsPlan = () => {
-  const plan = [
-    {
-      session: "Sáng",
-      img: <img src="src\assets\tam.png" alt="" />,
-      name: "Tên món ăn",
-      time: "1",
-      serving: "1",
-    },
-    {
-      session: "Trưa",
-      img: <img src="src\assets\tam.png" alt="" />,
-      name: "Tên món ăn",
-      time: "1",
-      serving: "1",
-    },
-    {
-      session: "Tối",
-      img: <img src="src\assets\tam.png" alt="" />,
-      name: "Tên món ăn",
-      time: "1",
-      serving: "1",
-    },
-    {
-      session: "Ăn vặt",
-      img: <img src="src\assets\tam.png" alt="" />,
-      name: "Tên món ăn",
-      time: "1",
-      serving: "1",
-    },
-  ];
+  const { chosenMeals, setChosenMeals, setNutrients, appliedDate } =
+    useMealPlanStore((state) => state);
+  const [meals, setMeals] = useState([]);
+  const [keepMeals, setKeepMeals] = useState([]);
 
-  return (
-    <div>
+  useEffect(() => {
+    if (chosenMeals) setMeals(chosenMeals);
+  }, [chosenMeals]);
+
+  const handleRegenerateBtnClick = async (mealTime) => {
+    const regenerateMeals = chosenMeals
+      .filter((chosenMeal) => chosenMeal.mealTime === mealTime)
+      .filter(({ mealId }) => !keepMeals.includes(mealId));
+
+    if (!regenerateMeals?.length) return;
+
+    console.log(regenerateMeals[0].mealId);
+
+    const newMealPlan = await updateOneMealAPI(
+      regenerateMeals[0].mealId,
+      mealTime,
+      appliedDate.startOf('date').toISOString()
+    );
+
+    console.log(newMealPlan);
+
+    setChosenMeals(newMealPlan?.chosenMeals);
+    setNutrients(newMealPlan?.nutrients);
+  };
+
+  const handleExceptBtnClick = (mealId) => {
+    const isMealExistInKeepMeals = keepMeals.find((id) => mealId === id);
+
+    if (isMealExistInKeepMeals)
+      setKeepMeals(keepMeals.filter((meal) => meal !== mealId));
+    if (!isMealExistInKeepMeals) setKeepMeals([...keepMeals, mealId]);
+  };
+
+  if (meals?.length)
+    return (
       <div>
-        {plan.map((plan, i) => (
+        {mealTimes.map(({ key, renderName }) => (
           <div
-            key={i}
-            className="px-5 py-5 border-2 border-primaryColor rounded-xl mt-10 "
+            key={key}
+            className="px-6 py-5 border-2 border-primaryColor rounded-xl mt-10"
           >
+            {/* Meal time title */}
             <div className="flex flex-row items-center justify-between">
-              <div className="text-primaryColor font-semibold text-xl">
-                {plan.session}
+              <div className="text-primaryColor font-md text-lg">
+                {renderName}
               </div>
-              <div className="border border-primaryColor rounded-full px-2 py-2">
-                <LiaExchangeAltSolid className="cursor-pointer text-primaryColor" />
+              <div className="group hover:bg-primaryColor cursor-pointer border border-primaryColor rounded-full px-2 py-2">
+                <LiaExchangeAltSolid
+                  onClick={() => handleRegenerateBtnClick(key)}
+                  className="group-hover:text-white text-primaryColor"
+                />
               </div>
             </div>
-            <div className="flex flex-row items-center justify-between">
-              <div className="flex flex-row ">
-                <label
-                  htmlFor={`checkbox${i}`}
-                  className="cursor-pointer relative"
-                >
-                  <input
-                    type="checkbox"
-                    id={`checkbox${i}`}
-                    className="appearance-none w-6 h-6 border border-primaryColor rounded-full checkedi"
-                  />
-                  <FaCheckCircle className="text-primaryColor text-xs w-6 h-6 absolute left-0 top-0 text-opacity-0 check1 transition" />
-                </label>
-              </div>
-              <div className="w-1/6">{plan.img}</div>
-              <div>
-                <div>{plan.name}</div>
-                <div>
-                  {plan.time}h | {plan.serving} phần ăn
-                </div>
-              </div>
-              <div>
-                <BsThreeDots className="cursor-pointer text-primaryColor " />
-              </div>
-            </div>
+            {/* Meals list in each meal time*/}
+            {meals.map(
+              ({ mealId, mealName, mealTime, imgUrl, quantity }, index) =>
+                key === mealTime && (
+                  <div
+                    key={mealId}
+                    className="mt-4 flex flex-row items-center justify-between"
+                  >
+                    <div className="flex flex-row items-center gap-x-6">
+                      <div className="flex flex-row ">
+                        <label
+                          htmlFor={mealTime}
+                          className="cursor-pointer relative"
+                        >
+                          <input
+                            type="checkbox"
+                            id={mealTime}
+                            className="appearance-none w-6 h-6 border border-primaryColor rounded-full checkedi"
+                          />
+                          <FaCheckCircle
+                            onClick={() => handleExceptBtnClick(mealId)}
+                            className="text-primaryColor text-xs w-6 h-6 absolute left-0 top-0 text-opacity-0 check1 transition"
+                          />
+                        </label>
+                      </div>
+                      <img
+                        className="w-1/6 rounded-md"
+                        src={mealImgs[index]}
+                        alt={mealName}
+                      />
+                      <div className="w-1/2">
+                        <div className="font-md text-base">{mealName}</div>
+                        <div className="flex items-center gap-x-2 mt-2">
+                          <input
+                            className="text-center p-2 w-8 h-8 rounded-md border-2 border-thirdColor"
+                            defaultValue={quantity}
+                          />
+                          phần ăn
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <BsThreeDots className="cursor-pointer text-primaryColor " />
+                    </div>
+                  </div>
+                )
+            )}
           </div>
         ))}
       </div>
-    </div>
-  );
+    );
 };
 
 export default SessionsPlan;
